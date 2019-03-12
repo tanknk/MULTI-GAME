@@ -12,8 +12,8 @@
 // INITIAL SETUP
 var canvas = document.getElementById('canvas'),
     c = canvas.getContext('2d');
-var innerWidth = 700,
-	innerHeight = 600;
+var innerWidth = 2000,
+	innerHeight = 800;
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
 
@@ -73,8 +73,8 @@ addEventListener('keyup', function(event){
 
 // PLAYER SETUP
 var player = {},
-    player_width = 100,
-	player_height = 95,
+    player_width =  80,
+	player_height = 55,
 	player_img = new Image();
 	player_img.src = 'images/player2.png';
 
@@ -106,11 +106,11 @@ player = {
 // ENEMY SETUP
 var enemyArray = [],
 	enemyIndex = 0,
-	enemy_width = 35,
+	enemy_width = 55,
 	enemy_height = 43,
 	enemy_timer = 1000,
 	enemy_img = new Image();
-	enemy_img.src = 'images/enemy.png';
+	enemy_img.src = 'images/enemy2.png';
 
 // CREATE ENEMY OBJECT
 function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation){
@@ -254,14 +254,14 @@ function animate(currentTime){
 	c.clearRect(0,0, canvas.width, canvas.height);
 
 	// SCORE
-	c.font = '18px arial';
+	c.font = '30px arial';
 	c.fillStyle = '#fff';
-	c.fillText('SCORE: '+score, 10, 22);
+	c.fillText('SCORE: '+score, 20, 40);
 
 	// PLAYER POWER
-	c.font = '18px arial';
+	c.font = '30px arial';
 	c.fillStyle = '#fff';
-	c.fillText('POWER: '+player.power, innerWidth-108, 22);
+	c.fillText('POWER: '+player.power, innerWidth-190, 40);
 
 	// DRAW PLAYER
 	player.draw();
