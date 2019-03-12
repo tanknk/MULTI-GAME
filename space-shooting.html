@@ -4,32 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Space Shooting Game</title>
 </head>
-<style type="text/css">
-body{
-	margin: 0px;
-	
-	height: 100vh;
-}
-
-canvas{
-	
-	height: 100vh;
-	padding:0px;
-	display:block;
-margin:auto;
-background-size: 100% 100%;
-}	
-</style>
 <body>
 
-<canvas id="canvas" style="background:#000;"></canvas>
+<canvas id="canvas" style="background:#000; position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%;"></canvas>
+
 
 <script type="text/javascript">
-
 // INITIAL SETUP
 var canvas = document.getElementById('canvas'),
     c = canvas.getContext('2d');
-var innerWidth = 956,
+
+var innerWidth = 700,
 	innerHeight = 600;
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
