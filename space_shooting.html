@@ -9,7 +9,18 @@
 </head>
 
 <body style="height: 100%; margin:0 0 0 0;">
-
+<!-- END GAME SCREEN -->
+<center>
+    <div id="endGame">
+        <div id="endContent">
+            <h1 id="youDied">Game Over</h1>
+            <h1 id="nscore">Score :<span id="test">0</span></h1>
+            <form action="">
+            	<input type="button" value="TRY AGAIN?" onclick="start()"/>
+            </form>
+        </div>
+    </div>
+</center>
 	<!-- BACKGROUND -->
 	<div class='stars'></div>
 	<div class='twinkling'></div>
@@ -31,23 +42,23 @@
 		    width:100%; height:100%;
 		}
 		.stars {
-		    z-index: -1;
+		    z-index: -3;
 		    background: #000 url('images/stars.png') repeat top center;
 		    animation: move-star-back 100s linear infinite;
 		}
 		.twinkling{
-		    z-index: 0;
+		    z-index: -2;
 		    background:transparent url('images/twinkling.png') repeat top center;
 		    animation: move-twink-back 200s linear infinite;
 		}
 		.clouds{
-		    z-index: 1;
+		    z-index: -1;
 		    background:transparent url('images/clouds.png') repeat top center;
 		    animation: move-clouds-back 150s linear infinite;
 		}
 		@keyframes move-star-back {
 		    from {background-position:0 0;}
-		    to {background-position:0 5000px;}
+		    to {background-position:10000px 5000px;}
 		}
 		@keyframes move-twink-back {
 		    from {background-position:0 0;}
@@ -56,6 +67,47 @@
 		@keyframes move-clouds-back {
 		    from {background-position:0 0;}
 		    to {background-position:10000px 5000px;}
+		}
+		#youDied{
+	    position: relative;
+	    top:200px;
+	    margin: 0px;
+	    color: aliceblue;
+	    font-size: 50px;
+	    font-family: 'Kaushan Script', cursive;
+		}
+		#nscore{
+	    font-size: 50px;
+	    position: relative;
+	    top: 200px;
+	    color: #fff;
+		}
+		#endGame{
+	    position: absolute;
+	    background-size:cover;
+	    top:0%;
+	    left:0%;
+	    height: 100%;
+	    width:100%;
+	    display: none;
+	    background-image: url("images/uni.jpeg");
+		}
+		input{
+	    position: relative;
+	    top: 300px;
+	    height: 50px;
+	    width: 500px;
+	    margin: 20px 2px 1px;
+	    border-radius: 3%;
+	    border-bottom: 6px solid rgb(17, 3, 97);
+	    background-color: rgba(70, 72, 102, 0.8);
+	    font-family: 'Prompt', sans-serif;
+	    color: white;
+	    font-size: 20px;
+	  	}
+		input:hover{
+		    background-color: rgb(89, 46, 206);
+		    border-bottom: 6px solid aqua;
 		}
 	</style>
 
@@ -149,17 +201,17 @@
 			}
 			}
 
-			
+
 
 			this.update = function(){
 				this.y += this.dy;
 				this.x += this.dx;
-				
+
 				//if(this.x + this.width >= innerWidth){
 					//this.dx = -this.dx;
 				//}else if(this.x <= 0){
 					//this.dx = Math.abs(this.dx);
-				//}			
+				//}
 				if(this.y > innerHeight + this.height){
 					this.delete();
 				}
@@ -184,25 +236,25 @@
 			var dx = 3;
 			var dy = 3;
 		}
-		else if (random_create_enemy == 1) { 
+		else if (random_create_enemy == 1) {
 			var x = Math.random() * (innerWidth - enemy_width); //below to top
 			var y = innerHeight-enemy_height;
 			var dx = 3;
 			var dy = -3;
 		}
-		else if (random_create_enemy == 2) { 
+		else if (random_create_enemy == 2) {
 			var x =  -enemy_width;
 			var y = Math.random() * (innerHeight-enemy_height);//Left to right
 			var dx = 3;
 			var dy = 1;
 		}
-		else  { 
+		else  {
 			var x =  innerWidth - enemy_width;
-			var y = Math.random() * (innerHeight - enemy_height);//right to Left 
+			var y = Math.random() * (innerHeight - enemy_height);//right to Left
 			var dx = -3;
 			var dy = 1;
 		}
-		
+
 		var rotation = Math.random();
 		point = random_create_enemy;
 
@@ -275,6 +327,16 @@
 					}
 				});
 		}
+function died(){
+    canvas.style.display = 'none';
+    document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
+	document.body.style.cursor = '';
+}
+function start(){
+					window.location.reload();
+					document.getElementById('endGame').style.display = 'none';
+							document.body.style.cursor = 'none';
+				}
 		// ANIMATION LOOP
 		function animate(currentTime){
 		    var animation = requestAnimationFrame(animate);
@@ -311,8 +373,10 @@
 			handleCollisions();
 			if(player.power <= 0){
 				cancelAnimationFrame(animation);
+				died();
+				document.getElementById("test").innerText = score;
+    		}
 			}
-		}
 		animate();
 	</script>
 </body>
