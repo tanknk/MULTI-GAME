@@ -227,36 +227,36 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 }
 // CREATE ENEMY FUNCTION
 function create_enemy(){
-var random_create_enemy = Math.floor(Math.random() * 4);
-if (random_create_enemy == 0) {
-	var x = Math.random() * (innerWidth - enemy_width); //top to below
-	var y = -enemy_height;
-	var dx = 3;
-	var dy = 3;
-}
-else if (random_create_enemy == 1) {
-	var x = Math.random() * (innerWidth - enemy_width); //below to top
-	var y = innerHeight-enemy_height;
-	var dx = 3;
-	var dy = -3;
-}
-else if (random_create_enemy == 2) {
-	var x =  -enemy_width;
-	var y = Math.random() * (innerHeight-enemy_height);//Left to right
-	var dx = 3;
-	var dy = 1;
-}
-else  {
-	var x =  innerWidth - enemy_width;
-	var y = Math.random() * (innerHeight - enemy_height);//right to Left
-	var dx = -3;
-	var dy = 1;
-}
+	var random_create_enemy = Math.floor(Math.random() * 4);
+	if (random_create_enemy == 0) {
+		var x = Math.random() * (innerWidth - enemy_width); //top to below
+		var y = -enemy_height;
+		var dx = 3;
+		var dy = 3;
+	}
+	else if (random_create_enemy == 1) {
+		var x = Math.random() * (innerWidth - enemy_width); //below to top
+		var y = innerHeight-enemy_height;
+		var dx = 3;
+		var dy = -3;
+	}
+	else if (random_create_enemy == 2) {
+		var x =  -enemy_width;
+		var y = Math.random() * (innerHeight-enemy_height);//Left to right
+		var dx = 3;
+		var dy = 1;
+	}
+	else  {
+		var x =  innerWidth - enemy_width;
+		var y = Math.random() * (innerHeight - enemy_height);//right to Left
+		var dx = -3;
+		var dy = 1;
+	}
 
-var rotation = Math.random();
-point = random_create_enemy;
+	var rotation = Math.random();
+	point = random_create_enemy;
 
-new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
+	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
 }
 // BULLETS SETUP
 var bulletsArray = [],
@@ -338,9 +338,9 @@ function died(){
 	document.body.style.cursor = '';
 }
 function start(){
-					window.location.reload();
-					document.getElementById('endGame').style.display = 'none';
-							document.body.style.cursor = 'none';
+	window.location.reload();
+	document.getElementById('endGame').style.display = 'none';
+	document.body.style.cursor = 'none';
 				}
 // ANIMATION LOOP
 function animate(currentTime){
