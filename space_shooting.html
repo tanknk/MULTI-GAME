@@ -9,6 +9,7 @@
 </head>
 
 <body style="height: 100%; margin:0 0 0 0;">
+
 <!-- START GAME SCREEN-->
 <center>
 	<div id="startGame">
@@ -33,6 +34,7 @@
     </div>
 </center>
 	<!-- BACKGROUND -->
+
 	<div class='stars'></div>
 	<div class='twinkling'></div>
 	<div class='clouds'></div>
@@ -40,8 +42,7 @@
 
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
-	@import "susy";
-	@import "compass/reset";
+
 	body{
 		background: #000 url('images/stars.png') repeat top center;
 	}
@@ -69,7 +70,7 @@
 	}
 	@keyframes move-star-back {
 	    from {background-position:0 0;}
-	    to {background-position:10000px 5000px;}
+	    to {background-position:0 5000px;}
 	}
 	@keyframes move-twink-back {
 	    from {background-position:0 0;}
@@ -101,7 +102,7 @@
     height: 100%;
     width:100%;
     display: none;
-    background-image: url("images/uni.jpeg");
+    background-image: url("images/uni.png");
 	}
 	#startGame{
 	position:absolute;
@@ -111,7 +112,7 @@
 	height: 100%;
 	width: 100%;
 	display : block;
-	background-image: url("images/uni.jpeg");	
+	background-image: url("images/uni.png");
 	}
 	input{
     position: relative;
@@ -132,7 +133,9 @@
 	}
 </style>
 
+
 <script type="text/javascript">
+
 // INITIAL SETUP
 var canvas = document.getElementById('canvas'),
     c = canvas.getContext('2d');
@@ -341,7 +344,7 @@ function handleCollisions(){
 						enemy_timer  -= 25;
 					}
 				}
-					
+
 			}
 		});
 	});
@@ -362,6 +365,7 @@ function endgame(){
 	document.getElementById('endGame').style.display = 'none';
 	document.body.style.cursor = 'none';
 }
+
 function startgame(){
 	canvas.style.display = 'block';
 	document.getElementById('startGame').style.display = 'none';
@@ -403,13 +407,14 @@ function animate(currentTime){
 	// DETECT COLLISIONS
 	handleCollisions();
 
-	
+
 	if(player.power <= 0){
 		cancelAnimationFrame(animation);
 		died();
 		document.getElementById("test").innerText = score;
 	}
-	}
+}
+
 </script>
 </body>
 </html>
