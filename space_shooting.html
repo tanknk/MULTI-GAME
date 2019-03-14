@@ -9,6 +9,17 @@
 </head>
 
 <body style="height: 100%; margin:0 0 0 0;">
+<!-- START GAME SCREEN-->
+<center>
+	<div id="startGame">
+		<div id="endContent">
+			<h1 id="youDied">SPACE SHOOTING GAME</h1>
+			<form action="">
+				<input type="button" value="START GAME" onclick="startgame()"/>
+			</form>
+		</div>
+	</div>
+</center>
 <!-- END GAME SCREEN -->
 <center>
     <div id="endGame">
@@ -16,7 +27,7 @@
             <h1 id="youDied">Game Over</h1>
             <h1 id="nscore">Score :<span id="test">0</span></h1>
             <form action="">
-            	<input type="button" value="TRY AGAIN?" onclick="start()"/>
+            	<input type="button" value="TRY AGAIN?" onclick="endgame()"/>
             </form>
         </div>
     </div>
@@ -25,7 +36,7 @@
 	<div class='stars'></div>
 	<div class='twinkling'></div>
 	<div class='clouds'></div>
-	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%;"></canvas>
+	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
 
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
@@ -92,6 +103,16 @@
     display: none;
     background-image: url("images/uni.jpeg");
 	}
+	#startGame{
+	position:absolute;
+	background-size: cover;
+	top:0%;
+	left:0%;
+	height: 100%;
+	width: 100%;
+	display : block;
+	background-image: url("images/uni.jpeg");	
+	}
 	input{
     position: relative;
     top: 300px;
@@ -112,8 +133,6 @@
 </style>
 
 <script type="text/javascript">
-//HIDE THE CURSOR
-document.body.style.cursor = 'none';
 // INITIAL SETUP
 var canvas = document.getElementById('canvas'),
     c = canvas.getContext('2d');
@@ -121,6 +140,7 @@ var innerWidth = 2000,
 	innerHeight = 800;
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
+
 // VARIABLES
 var score = 0,
 	lastTime = 0;
@@ -227,36 +247,36 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 }
 // CREATE ENEMY FUNCTION
 function create_enemy(){
-var random_create_enemy = Math.floor(Math.random() * 4);
-if (random_create_enemy == 0) {
-	var x = Math.random() * (innerWidth - enemy_width); //top to below
-	var y = -enemy_height;
-	var dx = 3;
-	var dy = 3;
-}
-else if (random_create_enemy == 1) {
-	var x = Math.random() * (innerWidth - enemy_width); //below to top
-	var y = innerHeight-enemy_height;
-	var dx = 3;
-	var dy = -3;
-}
-else if (random_create_enemy == 2) {
-	var x =  -enemy_width;
-	var y = Math.random() * (innerHeight-enemy_height);//Left to right
-	var dx = 3;
-	var dy = 1;
-}
-else  {
-	var x =  innerWidth - enemy_width;
-	var y = Math.random() * (innerHeight - enemy_height);//right to Left
-	var dx = -3;
-	var dy = 1;
-}
+	var random_create_enemy = Math.floor(Math.random() * 4);
+	if (random_create_enemy == 0) {
+		var x = Math.random() * (innerWidth - enemy_width); //top to below
+		var y = -enemy_height;
+		var dx = 3;
+		var dy = 3;
+	}
+	else if (random_create_enemy == 1) {
+		var x = Math.random() * (innerWidth - enemy_width); //below to top
+		var y = innerHeight-enemy_height;
+		var dx = 3;
+		var dy = -3;
+	}
+	else if (random_create_enemy == 2) {
+		var x =  -enemy_width;
+		var y = Math.random() * (innerHeight-enemy_height);//Left to right
+		var dx = 3;
+		var dy = 1;
+	}
+	else  {
+		var x =  innerWidth - enemy_width;
+		var y = Math.random() * (innerHeight - enemy_height);//right to Left
+		var dx = -3;
+		var dy = 1;
+	}
 
-var rotation = Math.random();
-point = random_create_enemy;
+	var rotation = Math.random();
+	point = random_create_enemy;
 
-new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
+	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
 }
 // BULLETS SETUP
 var bulletsArray = [],
@@ -337,11 +357,17 @@ function died(){
     document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
 	document.body.style.cursor = '';
 }
-function start(){
-					window.location.reload();
-					document.getElementById('endGame').style.display = 'none';
-							document.body.style.cursor = 'none';
-				}
+function endgame(){
+	window.location.reload();
+	document.getElementById('endGame').style.display = 'none';
+	document.body.style.cursor = 'none';
+}
+function startgame(){
+	canvas.style.display = 'block';
+	document.getElementById('startGame').style.display = 'none';
+	document.body.style.cursor = 'none';
+	animate();
+}
 // ANIMATION LOOP
 function animate(currentTime){
     var animation = requestAnimationFrame(animate);
@@ -384,7 +410,6 @@ function animate(currentTime){
 		document.getElementById("test").innerText = score;
 	}
 	}
-animate();
 </script>
 </body>
 </html>
