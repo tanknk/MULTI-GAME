@@ -28,305 +28,310 @@
 	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%;"></canvas>
 
 	<!-- BACKGROUND STYLE -->
-	<style type="text/css">
-		@import "susy";
-		@import "compass/reset";
-		body{
-			background: #000 url('images/stars.png') repeat top center;
-		}
-		.stars, .twinkling, .clouds {
-		    position:absolute;
-		    display:block;
-		    top:0; bottom:0;
-		    left:0; right:0;
-		    width:100%; height:100%;
-		}
-		.stars {
-		    z-index: -3;
-		    background: #000 url('images/stars.png') repeat top center;
-		    animation: move-star-back 100s linear infinite;
-		}
-		.twinkling{
-		    z-index: -2;
-		    background:transparent url('images/twinkling.png') repeat top center;
-		    animation: move-twink-back 200s linear infinite;
-		}
-		.clouds{
-		    z-index: -1;
-		    background:transparent url('images/clouds.png') repeat top center;
-		    animation: move-clouds-back 150s linear infinite;
-		}
-		@keyframes move-star-back {
-		    from {background-position:0 0;}
-		    to {background-position:10000px 5000px;}
-		}
-		@keyframes move-twink-back {
-		    from {background-position:0 0;}
-		    to {background-position:-10000px 5000px;}
-		}
-		@keyframes move-clouds-back {
-		    from {background-position:0 0;}
-		    to {background-position:10000px 5000px;}
-		}
-		#youDied{
-	    position: relative;
-	    top:200px;
-	    margin: 0px;
-	    color: aliceblue;
-	    font-size: 50px;
-	    font-family: 'Kaushan Script', cursive;
-		}
-		#nscore{
-	    font-size: 50px;
-	    position: relative;
-	    top: 200px;
-	    color: #fff;
-		}
-		#endGame{
-	    position: absolute;
-	    background-size:cover;
-	    top:0%;
-	    left:0%;
-	    height: 100%;
-	    width:100%;
-	    display: none;
-	    background-image: url("images/uni.jpeg");
-		}
-		input{
-	    position: relative;
-	    top: 300px;
-	    height: 50px;
-	    width: 500px;
-	    margin: 20px 2px 1px;
-	    border-radius: 3%;
-	    border-bottom: 6px solid rgb(17, 3, 97);
-	    background-color: rgba(70, 72, 102, 0.8);
-	    font-family: 'Prompt', sans-serif;
-	    color: white;
-	    font-size: 20px;
-	  	}
-		input:hover{
-		    background-color: rgb(89, 46, 206);
-		    border-bottom: 6px solid aqua;
-		}
-	</style>
+<style type="text/css">
+	@import "susy";
+	@import "compass/reset";
+	body{
+		background: #000 url('images/stars.png') repeat top center;
+	}
+	.stars, .twinkling, .clouds {
+	    position:absolute;
+	    display:block;
+	    top:0; bottom:0;
+	    left:0; right:0;
+	    width:100%; height:100%;
+	}
+	.stars {
+	    z-index: -3;
+	    background: #000 url('images/stars.png') repeat top center;
+	    animation: move-star-back 100s linear infinite;
+	}
+	.twinkling{
+	    z-index: -2;
+	    background:transparent url('images/twinkling.png') repeat top center;
+	    animation: move-twink-back 200s linear infinite;
+	}
+	.clouds{
+	    z-index: -1;
+	    background:transparent url('images/clouds.png') repeat top center;
+	    animation: move-clouds-back 150s linear infinite;
+	}
+	@keyframes move-star-back {
+	    from {background-position:0 0;}
+	    to {background-position:10000px 5000px;}
+	}
+	@keyframes move-twink-back {
+	    from {background-position:0 0;}
+	    to {background-position:-10000px 5000px;}
+	}
+	@keyframes move-clouds-back {
+	    from {background-position:0 0;}
+	    to {background-position:10000px 5000px;}
+	}
+	#youDied{
+    position: relative;
+    top:200px;
+    margin: 0px;
+    color: aliceblue;
+    font-size: 50px;
+    font-family: 'Kaushan Script', cursive;
+	}
+	#nscore{
+    font-size: 50px;
+    position: relative;
+    top: 200px;
+    color: #fff;
+	}
+	#endGame{
+    position: absolute;
+    background-size:cover;
+    top:0%;
+    left:0%;
+    height: 100%;
+    width:100%;
+    display: none;
+    background-image: url("images/uni.jpeg");
+	}
+	input{
+    position: relative;
+    top: 300px;
+    height: 50px;
+    width: 500px;
+    margin: 20px 2px 1px;
+    border-radius: 3%;
+    border-bottom: 6px solid rgb(17, 3, 97);
+    background-color: rgba(70, 72, 102, 0.8);
+    font-family: 'Prompt', sans-serif;
+    color: white;
+    font-size: 20px;
+  	}
+	input:hover{
+	    background-color: rgb(89, 46, 206);
+	    border-bottom: 6px solid aqua;
+	}
+</style>
 
-	<script type="text/javascript">
-		//HIDE THE CURSOR
-		document.body.style.cursor = 'none';
-		// INITIAL SETUP
-		var canvas = document.getElementById('canvas'),
-		    c = canvas.getContext('2d');
-		var innerWidth = 2000,
-			innerHeight = 800;
-			canvas.width = innerWidth;
-			canvas.height = innerHeight;
-		// VARIABLES
-		var score = 0,
-			lastTime = 0;
-		// Mouse movement
-		addEventListener("mousemove", function(event)
-		{
-		  	player.x = event.clientX*1.3;
-			player.y = event.clientY*1.2;
-		} );
-		// PLAYER SETUP
-		var player = {},
-		    player_width =  80,
-			player_height = 55,
-			player_img = new Image();
-			player_img.src = 'images/player2.png';
-		// CREATE PLAYER
-			player = {
-			width : player_width,
-			height: player_height,
-			x : innerWidth/2 - player_width/2,
-			y : innerHeight - (player_height+10),
-			power : 10,
-			draw: function(){
-			   if(this.x <= 0){
-			     this.x = 0;
-			   }else if(this.x >= (innerWidth - this.width)){
-			     this.x = (innerWidth -this.width);
-			   }
-			   if(this.y <= 0){
-			     this.y = 0;
-			   }else if(this.y >= (innerHeight - this.height)){
-			     this.y = (innerHeight - this.height);
-			   }
-			   c.drawImage(player_img, this.x, this.y, this.width, this.height);
-			}
-		};
-		// ENEMY SETUP
-		var enemyArray = [],
-			enemyIndex = 0,
-			enemy_width = 55,
-			enemy_height = 43,
-			enemy_timer = 500,
-			enemy_img = new Image();
-			enemy_img.src = 'images/enemy2.png';
-		// CREATE ENEMY OBJECT
-		function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point){
-			this.x = x;
-			this.y = y;
-			this.dx = dx;
-			this.dy = dy;
-			this.img = enemy_img;
-			this.width = enemy_width;
-			this.height = enemy_height;
-			this.rotation = rotation;
-			enemyIndex++;
-			enemyArray[enemyIndex] = this;
-			this.id = enemyIndex;
-			this.point = point;
+<script type="text/javascript">
+//HIDE THE CURSOR
+document.body.style.cursor = 'none';
+// INITIAL SETUP
+var canvas = document.getElementById('canvas'),
+    c = canvas.getContext('2d');
+var innerWidth = 2000,
+	innerHeight = 800;
+	canvas.width = innerWidth;
+	canvas.height = innerHeight;
+// VARIABLES
+var score = 0,
+	lastTime = 0;
+// Mouse movement
+addEventListener("mousemove", function(event)
+{
+  	player.x = event.clientX*1.3;
+	player.y = event.clientY*1.2;
+} );
+// PLAYER SETUP
+var player = {},
+    player_width =  80,
+	player_height = 55,
+	player_img = new Image();
+	player_img.src = 'images/player2.png';
+// CREATE PLAYER
+	player = {
+	width : player_width,
+	height: player_height,
+	x : innerWidth/2 - player_width/2,
+	y : innerHeight - (player_height+10),
+	power : 10,
+	draw: function(){
+	   if(this.x <= 0){
+	     this.x = 0;
+	   }else if(this.x >= (innerWidth - this.width)){
+	     this.x = (innerWidth -this.width);
+	   }
+	   if(this.y <= 0){
+	     this.y = 0;
+	   }else if(this.y >= (innerHeight - this.height)){
+	     this.y = (innerHeight - this.height);
+	   }
+	   c.drawImage(player_img, this.x, this.y, this.width, this.height);
+	}
+};
+// ENEMY SETUP
+var enemyArray = [],
+	enemyIndex = 0,
+	enemy_width = 55,
+	enemy_height = 43,
+	enemy_timer = 500,
+	enemy_img = new Image();
+	enemy_img.src = 'images/enemy2.png';
+// CREATE ENEMY OBJECT
+function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point){
+	this.x = x;
+	this.y = y;
+	this.dx = dx;
+	this.dy = dy;
+	this.img = enemy_img;
+	this.width = enemy_width;
+	this.height = enemy_height;
+	this.rotation = rotation;
+	enemyIndex++;
+	enemyArray[enemyIndex] = this;
+	this.id = enemyIndex;
+	this.point = point;
 
-			if (this.point < 2) {
-				if(this.rotation < 0.3){
-					this.dx = this.dx;
-				}else if(this.rotation > 0.6){
-					this.dx = -this.dx;
-				}else{
-					this.dx = 0;
-					this.dy = this.dy;
-			}
-			}
-			else {
-				if(this.rotation < 0.3){
-					this.dy = this.dy;
-				}else if(this.rotation > 0.6){
-					this.dy = -this.dy;
-				}else{
-					this.dy = 0;
-					this.dx = this.dx;
-			}
-			}
+	if (this.point < 2) {
+		if(this.rotation < 0.3){
+			this.dx = this.dx;
+		}else if(this.rotation > 0.6){
+			this.dx = -this.dx;
+		}else{
+			this.dx = 0;
+			this.dy = this.dy;
+	}
+	}
+	else {
+		if(this.rotation < 0.3){
+			this.dy = this.dy;
+		}else if(this.rotation > 0.6){
+			this.dy = -this.dy;
+		}else{
+			this.dy = 0;
+			this.dx = this.dx;
+	}
+	}
 
+	this.update = function(){
+		this.y += this.dy;
+		this.x += this.dx;
 
+		//if(this.x + this.width >= innerWidth){
+			//this.dx = -this.dx;
+		//}else if(this.x <= 0){
+			//this.dx = Math.abs(this.dx);
+		//}
+		if(this.y > innerHeight + this.height){
+			this.delete();
+		}
+		if(this.x > innerWidth + this.width){
+		this.delete();
+	}
+		this.draw();
+	}
+	this.delete = function(){
+		delete enemyArray[this.id];
+	}
+	this.draw = function(){
+		c.drawImage(this.img, this.x, this.y, this.width, this.height);
+	}
+}
+// CREATE ENEMY FUNCTION
+function create_enemy(){
+var random_create_enemy = Math.floor(Math.random() * 4);
+if (random_create_enemy == 0) {
+	var x = Math.random() * (innerWidth - enemy_width); //top to below
+	var y = -enemy_height;
+	var dx = 3;
+	var dy = 3;
+}
+else if (random_create_enemy == 1) {
+	var x = Math.random() * (innerWidth - enemy_width); //below to top
+	var y = innerHeight-enemy_height;
+	var dx = 3;
+	var dy = -3;
+}
+else if (random_create_enemy == 2) {
+	var x =  -enemy_width;
+	var y = Math.random() * (innerHeight-enemy_height);//Left to right
+	var dx = 3;
+	var dy = 1;
+}
+else  {
+	var x =  innerWidth - enemy_width;
+	var y = Math.random() * (innerHeight - enemy_height);//right to Left
+	var dx = -3;
+	var dy = 1;
+}
 
-			this.update = function(){
-				this.y += this.dy;
-				this.x += this.dx;
+var rotation = Math.random();
+point = random_create_enemy;
 
-				//if(this.x + this.width >= innerWidth){
-					//this.dx = -this.dx;
-				//}else if(this.x <= 0){
-					//this.dx = Math.abs(this.dx);
-				//}
-				if(this.y > innerHeight + this.height){
-					this.delete();
-				}
-				if(this.x > innerWidth + this.width){
-				this.delete();
-			}
-				this.draw();
-			}
-			this.delete = function(){
-				delete enemyArray[this.id];
-			}
-			this.draw = function(){
-				c.drawImage(this.img, this.x, this.y, this.width, this.height);
-			}
+new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
+}
+// BULLETS SETUP
+var bulletsArray = [],
+	bulletIndex = 0,
+	bullet_width = 8,
+	bullet_height = 20,
+	speed = 15,
+	bullet_last_time = 0,
+	bullet_timer = 150;
+// CREATE BULLET OBJECT
+function bullet(x, y, width, height, speed){
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	this.speed = speed;
+	bulletIndex++;
+	bulletsArray[bulletIndex] = this;
+	this.id = bulletIndex;
+	this.update = function(){
+		this.y += -this.speed;
+		if(this.y < -this.height){
+			delete this.delete();
 		}
-		// CREATE ENEMY FUNCTION
-		function create_enemy(){
-		var random_create_enemy = Math.floor(Math.random() * 4);
-		if (random_create_enemy == 0) {
-			var x = Math.random() * (innerWidth - enemy_width); //top to below
-			var y = -enemy_height;
-			var dx = 3;
-			var dy = 3;
-		}
-		else if (random_create_enemy == 1) {
-			var x = Math.random() * (innerWidth - enemy_width); //below to top
-			var y = innerHeight-enemy_height;
-			var dx = 3;
-			var dy = -3;
-		}
-		else if (random_create_enemy == 2) {
-			var x =  -enemy_width;
-			var y = Math.random() * (innerHeight-enemy_height);//Left to right
-			var dx = 3;
-			var dy = 1;
-		}
-		else  {
-			var x =  innerWidth - enemy_width;
-			var y = Math.random() * (innerHeight - enemy_height);//right to Left
-			var dx = -3;
-			var dy = 1;
-		}
-
-		var rotation = Math.random();
-		point = random_create_enemy;
-
-		new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
-		}
-		// BULLETS SETUP
-		var bulletsArray = [],
-			bulletIndex = 0,
-			bullet_width = 8,
-			bullet_height = 10,
-			speed = 15,
-			bullet_last_time = 0,
-			bullet_timer = 150;
-		// CREATE BULLET OBJECT
-		function bullet(x, y, width, height, speed){
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-			this.speed = speed;
-			bulletIndex++;
-			bulletsArray[bulletIndex] = this;
-			this.id = bulletIndex;
-			this.update = function(){
-				this.y += -this.speed;
-				if(this.y < -this.height){
-					delete this.delete();
-				}
-				this.draw();
-			}
-			this.delete = function(){
-				delete bulletsArray[this.id];
-			}
-			this.draw = function(){
-				c.beginPath();
-				c.rect(this.x, this.y, this.width, this.height);
-				c.fillStyle = '#fff';
-				c.fill();
-				c.stroke();
-			}
-		}
-		// FIRE BULLETS
-		function fire(){
-			var x = (player.x + player.width/2) - bullet_width/2;
-			var y = player.y;
-			new bullet(x, y, bullet_width, bullet_height, speed);
-		}
-		// COLLISION FUNCTION
-		function collides(a, b){
-			return a.x < b.x + b.width &&
-			a.x + a.width > b.x &&
-			a.y < b.y + b.height &&
-			a.y+ a.height > b.y;
-		}
-		// DETECT COLLISION
-		function handleCollisions(){
-			bulletsArray.forEach(function(bullet){
-				enemyArray.forEach(function(enemy){
-					if(collides(bullet,enemy)){
-						bullet.delete();
-						enemy.delete();
-						score += 10;
+		this.draw();
+	}
+	this.delete = function(){
+		delete bulletsArray[this.id];
+	}
+	this.draw = function(){
+		c.beginPath();
+		c.rect(this.x, this.y, this.width, this.height);
+		c.fillStyle = '#fff';
+		c.fill();
+		c.stroke();
+	}
+}
+// FIRE BULLETS
+function fire(){
+	var x = (player.x + player.width/2) - bullet_width/2;
+	var y = player.y;
+	new bullet(x, y, bullet_width, bullet_height, speed);
+}
+// COLLISION FUNCTION
+function collides(a, b){
+	return a.x < b.x + b.width &&
+	a.x + a.width > b.x &&
+	a.y < b.y + b.height &&
+	a.y+ a.height > b.y;
+}
+// DETECT COLLISION
+function handleCollisions(){
+	bulletsArray.forEach(function(bullet){
+		enemyArray.forEach(function(enemy){
+			if(collides(bullet,enemy)){
+				bullet.delete();
+				enemy.delete();
+				score += 10;
+				//level
+				if (enemy_timer > 150) {
+					if (score%120 == 0) {
+						enemy_timer  -= 25;
 					}
-				});
-			});
-			enemyArray.forEach(function(enemy){
-					if(collides(player,enemy)){
-						player.power += -2;
-						enemy.delete();
-					}
-				});
-		}
+				}
+					
+			}
+		});
+	});
+	enemyArray.forEach(function(enemy){
+			if(collides(player,enemy)){
+				player.power += -2;
+				enemy.delete();
+			}
+		});
+}
 function died(){
     canvas.style.display = 'none';
     document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
@@ -337,47 +342,49 @@ function start(){
 					document.getElementById('endGame').style.display = 'none';
 							document.body.style.cursor = 'none';
 				}
-		// ANIMATION LOOP
-		function animate(currentTime){
-		    var animation = requestAnimationFrame(animate);
-			c.clearRect(0,0, canvas.width, canvas.height);
-			// SCORE
-			c.font = '30px arial';
-			c.fillStyle = '#fff';
-			c.fillText('SCORE: '+score, 20, 40);
-			// PLAYER POWER
-			c.font = '30px arial';
-			c.fillStyle = '#fff';
-			c.fillText('POWER: '+player.power, innerWidth-190, 40);
-			// DRAW PLAYER
-			player.draw();
-			// CREATE NEW ENEMY EVERY 1 SECONDS
-			if(currentTime >= lastTime + enemy_timer){
-				lastTime = currentTime;
-				create_enemy();
-			}
-			// UPDATE ENEMY POSITIONS
-			enemyArray.forEach(function(enemy){
-				enemy.update();
-			});
-			// FIRE BULLET EVERY 150 MILLISECONDS
-			if(currentTime >= bullet_last_time+ bullet_timer){
-				bullet_last_time = currentTime;
-				fire();
-			}
-			// UPDATE BULLET POSITIONS
-			bulletsArray.forEach(function(bullet){
-				bullet.update();
-			});
-			// DETECT COLLISIONS
-			handleCollisions();
-			if(player.power <= 0){
-				cancelAnimationFrame(animation);
-				died();
-				document.getElementById("test").innerText = score;
-    		}
-			}
-		animate();
-	</script>
+// ANIMATION LOOP
+function animate(currentTime){
+    var animation = requestAnimationFrame(animate);
+	c.clearRect(0,0, canvas.width, canvas.height);
+	// SCORE
+	c.font = '30px arial';
+	c.fillStyle = '#fff';
+	c.fillText('SCORE: '+score, 20, 40);
+	// PLAYER POWER
+	c.font = '30px arial';
+	c.fillStyle = '#fff';
+	c.fillText('POWER: '+player.power, innerWidth-190, 40);
+	// DRAW PLAYER
+	player.draw();
+	// CREATE NEW ENEMY EVERY 1 SECONDS
+	if(currentTime >= lastTime + enemy_timer){
+		lastTime = currentTime;
+		create_enemy();
+	}
+	// UPDATE ENEMY POSITIONS
+	enemyArray.forEach(function(enemy){
+		enemy.update();
+	});
+	// FIRE BULLET EVERY 150 MILLISECONDS
+	if(currentTime >= bullet_last_time+ bullet_timer){
+		bullet_last_time = currentTime;
+		fire();
+	}
+	// UPDATE BULLET POSITIONS
+	bulletsArray.forEach(function(bullet){
+		bullet.update();
+	});
+	// DETECT COLLISIONS
+	handleCollisions();
+
+	
+	if(player.power <= 0){
+		cancelAnimationFrame(animation);
+		died();
+		document.getElementById("test").innerText = score;
+	}
+	}
+animate();
+</script>
 </body>
 </html>
