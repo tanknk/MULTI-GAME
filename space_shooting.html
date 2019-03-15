@@ -563,9 +563,7 @@ function fire(){
 	
 }
 function roubullest(){
-	b = bullb;
-	cc = bullc;
-	d = bulld;
+	b = bullb; cc = bullc; d = bulld;
 	e = bulle;
 	f = bullf;
 	g = bullg;
@@ -630,18 +628,13 @@ function handleCollisions(){
 				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}}//heal
 				else if (enemy.item == 2) {if (bullet_timer > 75) {bullet_timer -= 15}} 
 				else if (enemy.item == 3){add_gun((Math.floor(Math.random() * 8)+1))} 
-				else {player.power += -20; sound("damage");}
+				else {player.power += -20; sound("damage");damage.currentTime = 0;}
 				if (enemy.item == 1) {
 					if (player.power < 200) {
 						player.power += 10; score += 10;
 						x.currentTime = 0;
 						sound("x");
 					}
-				}
-				else {
-					player.power += -20;
-					damage.currentTime = 0;
-					sound("damage");
 				}
 				enemy.delete();
 			}
