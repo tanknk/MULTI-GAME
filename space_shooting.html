@@ -12,11 +12,10 @@
 				<div class="buttons">
 					<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 				</div>
-<<<<<<< HEAD
-=======
+
 
 		</div>
->>>>>>> ca836b48126d96b0ef59689d4e9a2fa2b7919b4c
+
 	</div>
 </center>
 <!-- End game screen -->
@@ -391,8 +390,13 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 
 	if (this.item == 1)
 		{this.img = heal_img;}
+
 	else if (this.item == 2)
 		{this.img = fireR_img;}
+
+	else if (this.item == 2)
+		{this.img = fireR_img;}
+
 	else if (this.item == 3)
 		{this.img = gun_img;}
 		else {this.img = enemy_img;}
@@ -468,8 +472,13 @@ function create_enemy(){
 		var dx = -3;
 		var dy = 1;
 	}
+
 	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
 	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
+
+	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
+	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
+
 	else {var random_heal_or_enemy =0;}
 
 	var rotation = Math.random();
@@ -524,6 +533,7 @@ function bullet(x, y, width, height, speedx, speedy){
 function fire(){
 	var x = (player.x + player.width/2) - bullet_width/2;
 	var y = player.y;
+
 	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
 	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
 	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
@@ -532,15 +542,33 @@ function fire(){
 	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
 	if (bullg) {new bullet(x, y, 10, 10, 20, 0);}
 	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);}
+
+	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
+	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
+	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
+	if (bulld) {new bullet(x, y, 10, 10, -10, -10);}
+	if (bulle) {new bullet(x, y, 10, 10, 0, -20);}
+	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
+	if (bullg) {new bullet(x, y, 10, 10, 20, 0);}
+	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);}
+
 	shot.volume = 0.05;
 	shot.currentTime = 0;
 	sound("shot");
 	new bullet(x, y, bullet_width, bullet_height, speed);
 
+
 }
 function roubullest(){
 	b = bullb;
 	cc = bullc;
+
+
+}
+function roubullest(){
+	b = bullb;
+	cc = bullc;
+
 	d = bulld;
 	e = bulle;
 	f = bullf;
@@ -566,6 +594,7 @@ function collides(a, b){
 }
 //Add Gun
 function add_gun(R){
+
 	if (R==1) {if (bulla == 1) {R+=1;} else {bulla = 1}}
 	else if (R==2) {if (bullb == 1) {R+=1;} else {bullb = 1}}
 	if (R==3) {if (bullc == 1) {R+=1;} else {bullc = 1}}
@@ -573,6 +602,15 @@ function add_gun(R){
 	if (R==5) {if (bulle == 1) {R+=1;} else {bulle = 1}}
 	else if (R==6) {if (bullf == 1) {R+=1;} else {bullf = 1}}
 	if (R==7) {if (bullg == 1) {R+=1;} else {bullg = 1}}
+
+	if (R==1) {if (bulla == 1) {R+=1;} else {bulla = 1}}
+	else if (R==2) {if (bullb == 1) {R+=1;} else {bullb = 1}}
+	if (R==3) {if (bullc == 1) {R+=1;} else {bullc = 1}}
+	else if (R==4) {if (bulld == 1) {R+=1;} else {bulld = 1}}
+	if (R==5) {if (bulle == 1) {R+=1;} else {bulle = 1}}
+	else if (R==6) {if (bullf == 1) {R+=1;} else {bullf = 1}}
+	if (R==7) {if (bullg == 1) {R+=1;} else {bullg = 1}}
+
 	else if (R==8) {if (bullh == 1) {R = 1;} else {bullh = 1}}
 	bullet_timer += 15
 }
@@ -604,8 +642,13 @@ function handleCollisions(){
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}}//heal
+
 				else if (enemy.item == 2) {if (bullet_timer > 75) {bullet_timer -= 15}}
 				else if (enemy.item == 3){add_gun((Math.floor(Math.random() * 8)+1))}
+
+				else if (enemy.item == 2) {if (bullet_timer > 75) {bullet_timer -= 15}}
+				else if (enemy.item == 3){add_gun((Math.floor(Math.random() * 8)+1))}
+
 				else {player.power += -20; sound("damage");damage.currentTime = 0;}
 				if (enemy.item == 1) {
 					if (player.power < 200) {
