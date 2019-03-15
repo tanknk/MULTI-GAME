@@ -164,7 +164,7 @@ var player = {},
     player_width =  80,
 	player_height = 55,
 	player_img = new Image();
-	player_img.src = 'images/player2.png';
+	player_img.src = 'images/360.png';
 // CREATE PLAYER
 	player = {
 	width : player_width,
@@ -186,6 +186,58 @@ var player = {},
 	   c.drawImage(player_img, this.x, this.y, this.width, this.height);
 	}
 };
+// ROTATE
+var click_c = 0;
+addEventListener("click", function(){
+	if(click_c == 1 || click_c == 3 || click_c == 5 || click_c == 7){
+		player.width = 95;
+		player.height = 90;
+	}
+	else if(click_c == 2 || click_c == 6){
+		player.width = 90;
+		player.height = 80;
+	}
+	else if(click_c == 0 ||click_c == 4 || click_c == 8){
+		player.width = 80;
+		player.height = 55;
+	}
+	if(click_c == 0){
+		player_img.src = 'images/360.png';
+		click_c++;
+	}
+	else if(click_c == 1){
+		player_img.src = 'images/45.png';
+		click_c++;
+	}
+	else if(click_c == 2){
+		player_img.src = 'images/90.png';
+		click_c++;
+	}
+	else if(click_c == 3){
+		player_img.src = 'images/135.png';
+		click_c++;
+	}
+	else if(click_c == 4){
+		player_img.src = 'images/180.png';
+		click_c++;
+	}
+	else if(click_c == 5){
+		player_img.src = 'images/225.png';
+		click_c++;
+	}
+	else if(click_c == 6){
+		player_img.src = 'images/270.png';
+		click_c++;
+	}
+	else if(click_c == 7){
+		player_img.src = 'images/315.png'
+		click_c = 0;
+	}
+	else if(click_c == 8){
+		player_img.src = 'images/360.png'
+	}
+});
+
 // ENEMY SETUP
 var enemyArray = [],
 	enemyIndex = 0,
