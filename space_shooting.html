@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 <title>Space X</title>
-
 </head>
-
 <body style="height: 100%; margin:0 0 0 0;">
-
-<!-- START GAME SCREEN-->
+<!-- Start game screen -->
 <center>
 	<div id="startGame">
-		<div id="endContent">
 				<a>Space X</a>
 				<div class="buttons">
 					<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 				</div>
 
+
 		</div>
+
 	</div>
 </center>
-<!-- END GAME SCREEN -->
+<!-- End game screen -->
 <center>
     <div id="endGame">
         <div id="endContent">
-            <h1 id="youDied">Game Over</h1>
-            <h1 id="nscore">Score :&nbsp;<span id="test">0</span></h1>
+            <h1 id="gameover">Game Over</h1>
+            <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
 		</div>
 		<div class="buttons">
 				<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
 		</div>
     </div>
 </center>
-	<!-- BACKGROUND -->
+	<!-- Background -->
 
 	<div class='stars'></div>
 	<div class='twinkling'></div>
 	<div class='clouds'></div>
 	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-	<!-- SOUND -->
+	<!-- Sound -->
 	<audio id="bgvolume" autoplay loop>
 		<source src="sound/playing.mp3" type="audio/ogg">
 	</audio>
@@ -59,13 +55,39 @@
 	<audio id="diedagain" preload="auto">
 		<source src="sound/died.mp3" type="audio/ogg">
 	</audio>
-	<audio id="shot" preload="auto">
-		<source src="sound/shot.mp3" type="audio/ogg">
+	<audio id="shoot" preload="auto">
+		<source src="sound/shoot.mp3" type="audio/ogg">
 	</audio>
+	<audio id="heal" preload="auto">
+		<source src="sound/heal.mp3" type="audio/ogg">
+	</audio>
+	<audio id="speedup" preload="auto">
+		<source src="sound/speedup.mp3" type="audio/ogg">
+	</audio>
+	<audio id="upgrade" preload="auto">
+		<source src="sound/upgrade.mp3" type="audio/ogg">
+	</audio>
+	<audio id="rotate" preload="auto">
+		<source src="sound/rotate.mp3" type="audio/ogg">
+	</audio>
+	<video autoplay muted id="video-background" loop>
+  		<source src="vdo/background.mp4" type="video/mp4">
+	</video>
 
 
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
+	#video-background {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1;
+	}
+	/* Button */
 	* {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
@@ -118,8 +140,10 @@
 		background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
 		box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
 	}
+	/* Body background */
 	body{
 		background: #000 url('images/stars.png') repeat top center;
+		font-family: helvetica, arial, sans-serif;
 	}
 	.stars, .twinkling, .clouds {
 	    position:absolute;
@@ -155,19 +179,21 @@
 	    from {background-position:0 0;}
 	    to {background-position:10000px 5000px;}
 	}
-	#youDied{
+	/* Game over screen */
+	#gameover{
     position: relative;
     top:200px;
     margin: 0px;
     color: aliceblue;
     font-size: 50px;
-    font-family: 'Kaushan Script', cursive;
+    font-family: 'Pacifico', cursive;
 	}
-	#nscore{
+	#score{
     font-size: 50px;
     position: relative;
     top: 200px;
     color: #fff;
+	font-family: 'Pacifico', cursive;
 	}
 	#endGame{
     position: absolute;
@@ -177,8 +203,9 @@
     height: 100%;
     width:100%;
     display: none;
-    background-image: url("images/uni.png");
 	}
+	/* Start game screen */
+	@import url('https://fonts.googleapis.com/css?family=Pacifico');
 	#startGame{
 	position:absolute;
 	background-size: cover;
@@ -187,9 +214,7 @@
 	height: 100%;
 	width: 100%;
 	display : block;
-	background-image: url("images/uni.png");
 	}
-	/* START GAME SCREEN*/
 	#input{
 		position:absolute;
 		top:60%;
@@ -213,70 +238,47 @@
 		box-shadow: 0 5px #666;
 		transform: translateY(4px);
 	}
-		@keyframes tipsy {
-	0 {
-		transform: translateX(-50%) translateY(-50%) rotate(0deg);
+	@keyframes rainbow {
+		0%{color:purple;}
+		16%{color: cadetblue;}
+		32%{color: blue;}
+		48%{color: green;}
+		64%{color: yellow;}
+		80%{color: orangered;}
+		96%{color: red;}
 	}
-	100% {
-		transform: translateX(-50%) translateY(-50%) rotate(360deg);
-	}
-	}
-
-	body {
-	font-family: helvetica, arial, sans-serif;
-	}
-
 	a {
 	color: #fffbf1;
-	text-shadow: 0 20px 25px #2e2e31, 0 40px 60px #2e2e31;
+	text-shadow: 0 1px 25px #fff;
 	font-size: 80px;
 	font-weight: bold;
 	text-decoration: none;
+	font-family: 'Pacifico', cursive;
 	letter-spacing: -3px;
 	margin: 0;
 	position: absolute;
-	top: 30%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
-	}
-
-	a:before,
-	a:after {
-	content: '';
-	padding: .9em .4em;
-	position: absolute;
-	left: 50%;
-	width: 100%;
-	top: 50%;
-	display: block;
-	border: 15px solid red;
-	transform: translateX(-50%) translateY(-50%) rotate(0deg);
-	animation: 10s infinite alternate ease-in-out tipsy;
-	}
-
-	a:before {
-	border-color: #d9524a #d9524a rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-	z-index: -1;
-	}
-
-	a:after {
-	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #d9524a #d9524a;
-	box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
+	top: 20%;
+	left: 40%;
+	animation: rainbow 5s linear infinite;
 	}
 </style>
 
 
 <script type="text/javascript">
-// SOUND
+// SOUND SET
 var end_sound = document.getElementById("endscreen");
 var start_sound = document.getElementById("startscreen");
 var bgvol = document.getElementById("bgvolume");
+bgvol.volume = 0.09;
+start_sound.volume = 0.09;
+end_sound.volume = 0.3;
+damage.volume = 0.4;
+shoot.volume = 0.05;
+rotate.volume = 0.15;
 end_sound.pause();
 start_sound.play();
 bgvol.pause();
-bgvol.volume = 0.05;
-start_sound.volume = 0.05;
-end_sound.volume = 0.08;
+
 function sound(id){
         document.getElementById(id).play();
     }
@@ -383,6 +385,8 @@ addEventListener("click", function(event){
 		player_img.src = 'images/360.png'
 		roubullest();
 	}
+	rotate.currentTime = 0;
+	sound("rotate");
 });
 
 // ENEMY SETUP
@@ -415,8 +419,13 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 
 	if (this.item == 1)
 		{this.img = heal_img;}
-	else if (this.item == 2) 
-		{this.img = fireR_img;} 
+
+	else if (this.item == 2)
+		{this.img = fireR_img;}
+
+	else if (this.item == 2)
+		{this.img = fireR_img;}
+
 	else if (this.item == 3)
 		{this.img = gun_img;}
 		else {this.img = enemy_img;}
@@ -492,8 +501,13 @@ function create_enemy(){
 		var dx = -3;
 		var dy = 1;
 	}
-	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;} 
-	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}} 
+
+	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
+	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
+
+	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
+	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
+
 	else {var random_heal_or_enemy =0;}
 
 	var rotation = Math.random();
@@ -508,6 +522,7 @@ var bulletsArray = [],
 	bullet_height = 20,
 	bullet_last_time = 0,
 	bullet_timer = 150;
+	speed = 0;
 var bulla = 0,	bullb = 1,	bullc = 0,	bulld = 0,	bulle = 0,	bullf = 0,	bullg = 0,	bullh = 0;
 var a=0, b=0, cc=0,d=0, f=0, g=0, h=0, e=0;
 
@@ -548,18 +563,27 @@ function bullet(x, y, width, height, speedx, speedy){
 function fire(){
 	var x = (player.x + player.width/2) - bullet_width/2;
 	var y = player.y;
-	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);} 
-	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);} 
-	if (bullc) {new bullet(x, y, 10, 10, -20, 0);} 
-	if (bulld) {new bullet(x, y, 10, 10, -10, -10);} 
-	if (bulle) {new bullet(x, y, 10, 10, 0, -20);} 
+
+	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
+	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
+	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
+	if (bulld) {new bullet(x, y, 10, 10, -10, -10);}
+	if (bulle) {new bullet(x, y, 10, 10, 0, -20);}
+	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
+	if (bullg) {new bullet(x, y, 10, 10, 20, 0);}
+	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);}
+
+	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
+	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
+	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
+	if (bulld) {new bullet(x, y, 10, 10, -10, -10);}
+	if (bulle) {new bullet(x, y, 10, 10, 0, -20);}
 	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
 	if (bullg) {new bullet(x, y, 10, 10, 20, 0);} 
 	if (bullh) {new bullet(x-10, y+30, 10, 10, 10, 10);} 
 	shot.volume = 0.05;
 	shot.currentTime = 0;
 	sound("shot");
-	new bullet(x, y, bullet_width, bullet_height, speed);
 	
 }
 function roubullest(){
@@ -568,6 +592,14 @@ function roubullest(){
 
 	bullb = cc;	bullc = d;	bulld = e;	bulle = f;	bullf = g;
 	bullg = h;	bullh = a;
+}
+function roubullest(){
+	b = bullb;	cc = bullc;	d = bulld; e = bulle; f = bullf; g = bullg;
+	h = bullh;	a = bulla; 
+
+	bulla = b;	bullb = cc;	bullc = d;	bulld = e;	bulle = f;	bullf = g;
+	bullg = h;	bullh = a;
+
 }
 // COLLISION FUNCTION
 function collides(a, b){
@@ -578,13 +610,14 @@ function collides(a, b){
 }
 //Add Gun
 function add_gun(R){
-	if (R==1) {if (bulla == 1) {R+=1;} else {bulla = 1}} 
+
+	if (R==1) {if (bulla == 1) {R+=1;} else {bulla = 1}}
 	else if (R==2) {if (bullb == 1) {R+=1;} else {bullb = 1}}
-	if (R==3) {if (bullc == 1) {R+=1;} else {bullc = 1}} 
+	if (R==3) {if (bullc == 1) {R+=1;} else {bullc = 1}}
 	else if (R==4) {if (bulld == 1) {R+=1;} else {bulld = 1}}
-	if (R==5) {if (bulle == 1) {R+=1;} else {bulle = 1}} 
+	if (R==5) {if (bulle == 1) {R+=1;} else {bulle = 1}}
 	else if (R==6) {if (bullf == 1) {R+=1;} else {bullf = 1}}
-	if (R==7) {if (bullg == 1) {R+=1;} else {bullg = 1}} 
+	if (R==7) {if (bullg == 1) {R+=1;} else {bullg = 1}}
 	else if (R==8) {if (bullh == 1) {R = 1;} else {bullh = 1}}
 	bullet_timer += 15
 }
@@ -616,14 +649,24 @@ function handleCollisions(){
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}}//heal
-				else if (enemy.item == 2) {if (bullet_timer > 75) {bullet_timer -= 15}} 
-				else if (enemy.item == 3){add_gun((Math.floor(Math.random() * 8)+1))} 
+
+				else if (enemy.item == 2 && bullet_timer > 75) {
+					bullet_timer -= 15;
+					speedup.currentTime = 0;
+					sound("speedup");
+					}
+				else if (enemy.item == 3){
+					add_gun((Math.floor(Math.random() * 8)+1));
+					upgrade.currentTime = 0;
+					sound("upgrade");
+				}
+
 				else {player.power += -20; sound("damage");damage.currentTime = 0;}
 				if (enemy.item == 1) {
 					if (player.power < 200) {
 						player.power += 10; score += 10;
-						x.currentTime = 0;
-						sound("x");
+						heal.currentTime = 0;
+						sound("heal");
 					}
 				}
 				enemy.delete();
@@ -637,6 +680,7 @@ function died(){
 	document.body.style.cursor = '';
 	bgvol.pause();
 	end_sound.play();
+	document.getElementById('video-background').style.zIndex = -1;
 }
 function endgame(){
 	window.location.reload();
@@ -652,6 +696,7 @@ function startgame(){
 	click_c = 0;
 	bgvol.play(); start_sound.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
+	document.getElementById('video-background').style.zIndex = -4;
 }
 
 // ANIMATION LOOP
@@ -659,13 +704,13 @@ function animate(currentTime){
     var animation = requestAnimationFrame(animate);
 	c.clearRect(0,0, canvas.width, canvas.height);
 	// SCORE
-	c.font = '30px arial';
+	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('SCORE: '+score, 20, 40);
+	c.fillText('SCORE : '+score, 20, 40);
 	// PLAYER POWER
-	c.font = '30px arial';
+	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('POWER: '+player.power+"%", innerWidth-210, 40);
+	c.fillText('POWER : '+player.power+"%", innerWidth-210, 40);
 	// DRAW PLAYER
 	player.draw();
 	// CREATE NEW ENEMY EVERY 1 SECONDS
