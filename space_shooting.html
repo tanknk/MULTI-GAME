@@ -39,7 +39,13 @@
 	<div class='twinkling'></div>
 	<div class='clouds'></div>
 	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-
+	<!-- SOUND -->
+	<audio id="volume" autoplay loop>
+		<source src="sound/playing.mp3" type="audio/ogg">
+	</audio>
+	<audio id="shot" preload="auto">
+		<source src="http://www.it.kmitl.ac.th/~it61070020/multi/shot.mp3" type="audio/ogg">
+	</audio>
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
 
@@ -188,6 +194,8 @@ var enemyArray = [],
 	enemy_timer = 500,
 	enemy_img = new Image();
 	enemy_img.src = 'images/enemy2.png';
+	boom_img = new Image();
+	boom_img.src = 'images/boom.png';
 // CREATE ENEMY OBJECT
 function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point){
 	this.x = x;
@@ -336,8 +344,13 @@ function handleCollisions(){
 		enemyArray.forEach(function(enemy){
 			if(collides(bullet,enemy)){
 				bullet.delete();
-				enemy.delete();
+				enemy.img = boom_img;
+				enemy.dx = 0;
+				enemy.dy =0;
 				score += 10;
+				setTimeout(function() {
+  enemy.delete();
+}, 100);
 				//level
 				if (enemy_timer > 150) {
 					if (score%120 == 0) {
