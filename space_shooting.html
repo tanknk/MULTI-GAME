@@ -39,7 +39,13 @@
 	<div class='twinkling'></div>
 	<div class='clouds'></div>
 	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-
+	<!-- SOUND -->
+	<audio id="volume" autoplay loop>
+		<source src="sound/playing.mp3" type="audio/ogg">
+	</audio>
+	<audio id="shot" preload="auto">
+		<source src="http://www.it.kmitl.ac.th/~it61070020/multi/shot.mp3" type="audio/ogg">
+	</audio>
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
 
@@ -158,7 +164,7 @@ var player = {},
     player_width =  80,
 	player_height = 55,
 	player_img = new Image();
-	player_img.src = 'images/player2.png';
+	player_img.src = 'images/360.png';
 // CREATE PLAYER
 	player = {
 	width : player_width,
@@ -180,6 +186,58 @@ var player = {},
 	   c.drawImage(player_img, this.x, this.y, this.width, this.height);
 	}
 };
+// ROTATE
+var click_c = 0;
+addEventListener("click", function(){
+	if(click_c == 1 || click_c == 3 || click_c == 5 || click_c == 7){
+		player.width = 95;
+		player.height = 90;
+	}
+	else if(click_c == 2 || click_c == 6){
+		player.width = 90;
+		player.height = 80;
+	}
+	else if(click_c == 0 ||click_c == 4 || click_c == 8){
+		player.width = 80;
+		player.height = 55;
+	}
+	if(click_c == 0){
+		player_img.src = 'images/360.png';
+		click_c++;
+	}
+	else if(click_c == 1){
+		player_img.src = 'images/45.png';
+		click_c++;
+	}
+	else if(click_c == 2){
+		player_img.src = 'images/90.png';
+		click_c++;
+	}
+	else if(click_c == 3){
+		player_img.src = 'images/135.png';
+		click_c++;
+	}
+	else if(click_c == 4){
+		player_img.src = 'images/180.png';
+		click_c++;
+	}
+	else if(click_c == 5){
+		player_img.src = 'images/225.png';
+		click_c++;
+	}
+	else if(click_c == 6){
+		player_img.src = 'images/270.png';
+		click_c++;
+	}
+	else if(click_c == 7){
+		player_img.src = 'images/315.png'
+		click_c = 0;
+	}
+	else if(click_c == 8){
+		player_img.src = 'images/360.png'
+	}
+});
+
 // ENEMY SETUP
 var enemyArray = [],
 	enemyIndex = 0,
@@ -189,6 +247,8 @@ var enemyArray = [],
 	random_i = 5,
 	enemy_img = new Image();
 	enemy_img.src = 'images/enemy2.png';
+	boom_img = new Image();
+	boom_img.src = 'images/boom.png';
 	heal_img = new Image();
 	heal_img.src = 'images/heal.png';
 // CREATE ENEMY OBJECT
@@ -206,8 +266,8 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	this.point = point;
 	this.item = item;
 
-	if (this.item == 1) 
-	{this.img = heal_img;} 
+	if (this.item == 1)
+	{this.img = heal_img;}
 		else {this.img = enemy_img;}
 	if (this.point < 2) {
 		if(this.rotation < 0.3){
@@ -282,7 +342,7 @@ function create_enemy(){
 		var dy = 1;
 	}
 	if (random_i >Math.floor(Math.random() * 100)) {var random_heal_or_enemy =1;} else {var random_heal_or_enemy =0;}
-	
+
 	var rotation = Math.random();
 	point = random_create_enemy;
 
@@ -343,8 +403,13 @@ function handleCollisions(){
 		enemyArray.forEach(function(enemy){
 			if(collides(bullet,enemy)){
 				bullet.delete();
-				enemy.delete();
+				enemy.img = boom_img;
+				enemy.dx = 0;
+				enemy.dy =0;
 				score += 10;
+				setTimeout(function() {
+  enemy.delete();
+}, 100);
 				//level
 				if (enemy_timer > 150) {
 					if (score%120 == 0) {
@@ -358,7 +423,7 @@ function handleCollisions(){
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}} else {player.power += -20;}
-				
+
 				enemy.delete();
 			}
 		});
@@ -379,6 +444,7 @@ function startgame(){
 	document.getElementById('startGame').style.display = 'none';
 	document.body.style.cursor = 'none';
 	animate();
+	click_c = 0;
 }
 // ANIMATION LOOP
 function animate(currentTime){
