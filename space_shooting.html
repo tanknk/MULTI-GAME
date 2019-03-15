@@ -40,11 +40,23 @@
 	<div class='clouds'></div>
 	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
 	<!-- SOUND -->
-	<audio id="volume" autoplay loop>
+	<audio id="bgvolume" autoplay loop>
 		<source src="sound/playing.mp3" type="audio/ogg">
 	</audio>
+	<audio id="startscreen" autoplay loop>
+		<source src="sound/startgame.mp3" type="audio/ogg">
+	</audio>
+	<audio id="endscreen" autoplay loop>
+		<source src="sound/endgame.mp3" type="audio/ogg">
+	</audio>
 	<audio id="shot" preload="auto">
-		<source src="http://www.it.kmitl.ac.th/~it61070020/multi/shot.mp3" type="audio/ogg">
+		<source src="sound/attacksound2.mp3" type="audio/ogg">
+	</audio>
+	<audio id="damage" preload="auto">
+		<source src="sound/damage2.mp3" type="audio/ogg"> 
+	</audio>
+	<audio id="diedagain" preload="auto">
+		<source src="sound/died.mp3" type="audio/ogg">
 	</audio>
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
@@ -141,7 +153,19 @@
 
 
 <script type="text/javascript">
-
+// SOUND
+var end_sound = document.getElementById("endscreen");
+var start_sound = document.getElementById("startscreen");
+var bgvol = document.getElementById("bgvolume");
+end_sound.pause();
+start_sound.play();
+bgvol.pause();
+bgvol.volume = 0.02;
+start_sound.volume = 0.02;
+end_sound.volume = 0.08;
+function sound(id){
+        document.getElementById(id).play();
+    }
 // INITIAL SETUP
 var canvas = document.getElementById('canvas'),
     c = canvas.getContext('2d');
@@ -408,8 +432,9 @@ function handleCollisions(){
 				enemy.dy =0;
 				score += 10;
 				setTimeout(function() {
-  enemy.delete();
-}, 100);
+  					enemy.delete();
+					sound("shot");
+				}, 100);
 				//level
 				if (enemy_timer > 150) {
 					if (score%120 == 0) {
@@ -422,16 +447,19 @@ function handleCollisions(){
 	});
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
-				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}} else {player.power += -20;}
+				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}} else {player.power += -20; sound("damage");}
 
 				enemy.delete();
 			}
 		});
 }
 function died(){
+	sound("diedagain");
     canvas.style.display = 'none';
     document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
 	document.body.style.cursor = '';
+	bgvol.pause();
+	end_sound.play();
 }
 function endgame(){
 	window.location.reload();
@@ -445,6 +473,9 @@ function startgame(){
 	document.body.style.cursor = 'none';
 	animate();
 	click_c = 0;
+	bgvol.play();
+	start_sound.pause();
+
 }
 // ANIMATION LOOP
 function animate(currentTime){
