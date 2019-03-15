@@ -555,7 +555,7 @@ function fire(){
 	if (bulle) {new bullet(x, y, 10, 10, 0, -20);} 
 	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
 	if (bullg) {new bullet(x, y, 10, 10, 20, 0);} 
-	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);} 
+	if (bullh) {new bullet(x-10, y+30, 10, 10, 10, 10);} 
 	shot.volume = 0.05;
 	shot.currentTime = 0;
 	sound("shot");
@@ -563,21 +563,11 @@ function fire(){
 	
 }
 function roubullest(){
-	b = bullb; cc = bullc; d = bulld;
-	e = bulle;
-	f = bullf;
-	g = bullg;
-	h = bullh;
-	a = bulla;
+	b = bullb; cc = bullc; d = bulld; e = bulle; f = bullf;
+	g = bullg;	h = bullh;	a = bulla;	bulla = b;
 
-	bulla = b;
-	bullb = cc;
-	bullc = d;
-	bulld = e;
-	bulle = f;
-	bullf = g;
-	bullg = h;
-	bullh = a;
+	bullb = cc;	bullc = d;	bulld = e;	bulle = f;	bullf = g;
+	bullg = h;	bullh = a;
 }
 // COLLISION FUNCTION
 function collides(a, b){
@@ -660,18 +650,10 @@ function startgame(){
 	document.body.style.cursor = 'none';
 	animate();
 	click_c = 0;
-	bgvol.play();
-	start_sound.pause();
-	bulla = 0;
-	bullb = 1;
-	bullc = 0;
-	bulld = 0;
-	bulle = 0;
-	bullf = 0;
-	bullg = 0;
-	bullh = 0;
-
+	bgvol.play(); start_sound.pause();
+	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
 }
+
 // ANIMATION LOOP
 function animate(currentTime){
     var animation = requestAnimationFrame(animate);
