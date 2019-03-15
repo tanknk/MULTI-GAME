@@ -4,7 +4,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<title>Space Shooting Game</title>
+<title>Space X</title>
 
 </head>
 
@@ -14,10 +14,11 @@
 <center>
 	<div id="startGame">
 		<div id="endContent">
-			<h1 id="youDied">SPACE SHOOTING GAME</h1>
-			<form action="">
-				<input type="button" value="START GAME" onclick="startgame()"/>
-			</form>
+				<a>Space X</a>
+				<div class="buttons">
+					<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
+				</div>
+					
 		</div>
 	</div>
 </center>
@@ -26,11 +27,11 @@
     <div id="endGame">
         <div id="endContent">
             <h1 id="youDied">Game Over</h1>
-            <h1 id="nscore">Score :<span id="test">0</span></h1>
-            <form action="">
-            	<input type="button" value="TRY AGAIN?" onclick="endgame()"/>
-            </form>
-        </div>
+            <h1 id="nscore">Score :&nbsp;<span id="test">0</span></h1>
+		</div>
+		<div class="buttons">
+				<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
+		</div>
     </div>
 </center>
 	<!-- BACKGROUND -->
@@ -60,7 +61,58 @@
 	</audio>
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
 
+	.buttons {
+		margin: 10%;
+		position: absolute;
+		top:45%;
+		left:32%;
+		font-family:helvetica, arial, sans-serif;
+		text-align: center;
+	}
+
+	.btn-hover {
+		width: 200px;
+		font-size: 16px;
+		font-weight: 600;
+		color: #fff;
+		cursor: pointer;
+		margin: 20px;
+		height: 55px;
+		text-align:center;
+		border: none;
+		background-size: 300% 100%;
+		border-radius: 50px;
+		moz-transition: all .4s ease-in-out;
+		-o-transition: all .4s ease-in-out;
+		-webkit-transition: all .4s ease-in-out;
+		transition: all .4s ease-in-out;
+	}
+
+	.btn-hover:hover {
+		background-position: 100% 0;
+		moz-transition: all .4s ease-in-out;
+		-o-transition: all .4s ease-in-out;
+		-webkit-transition: all .4s ease-in-out;
+		transition: all .4s ease-in-out;
+	}
+
+	.btn-hover:focus {
+		outline: none;
+	}
+	.btn-hover.color-3 {
+		background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+		box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+	}
+	.btn-hover.color-8 {
+		background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+		box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+	}
 	body{
 		background: #000 url('images/stars.png') repeat top center;
 	}
@@ -132,22 +184,79 @@
 	display : block;
 	background-image: url("images/uni.png");
 	}
-	input{
-    position: relative;
-    top: 300px;
-    height: 50px;
-    width: 500px;
-    margin: 20px 2px 1px;
-    border-radius: 3%;
-    border-bottom: 6px solid rgb(17, 3, 97);
-    background-color: rgba(70, 72, 102, 0.8);
-    font-family: 'Prompt', sans-serif;
-    color: white;
-    font-size: 20px;
+	/* START GAME SCREEN*/
+	#input{
+		position:absolute;
+		top:60%;
+		left:40.5%;
+		padding: 30px 60px;
+		font-size: 24px;
+		text-align: center;
+		cursor: pointer;
+		outline: none;
+		color: #fff;
+		background-color: #4CAF50;
+		border: none;
+		border-radius: 15px;
+		box-shadow: 0 9px #999;
   	}
-	input:hover{
-	    background-color: rgb(89, 46, 206);
-	    border-bottom: 6px solid aqua;
+	#input:hover{
+	    background-color: #3e8e41;
+	}
+	#input:active {
+		background-color: #3e8e41;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
+	}
+		@keyframes tipsy {
+	0 {
+		transform: translateX(-50%) translateY(-50%) rotate(0deg);
+	}
+	100% {
+		transform: translateX(-50%) translateY(-50%) rotate(360deg);
+	}
+	}
+
+	body {
+	font-family: helvetica, arial, sans-serif;
+	}
+
+	a {
+	color: #fffbf1;
+	text-shadow: 0 20px 25px #2e2e31, 0 40px 60px #2e2e31;
+	font-size: 80px;
+	font-weight: bold;
+	text-decoration: none;
+	letter-spacing: -3px;
+	margin: 0;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	}
+
+	a:before,
+	a:after {
+	content: '';
+	padding: .9em .4em;
+	position: absolute;
+	left: 50%;
+	width: 100%;
+	top: 50%;
+	display: block;
+	border: 15px solid red;
+	transform: translateX(-50%) translateY(-50%) rotate(0deg);
+	animation: 10s infinite alternate ease-in-out tipsy;
+	}
+
+	a:before {
+	border-color: #d9524a #d9524a rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+	z-index: -1;
+	}
+
+	a:after {
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #d9524a #d9524a;
+	box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
 	}
 </style>
 
