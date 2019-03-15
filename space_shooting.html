@@ -58,10 +58,25 @@
 	<audio id="shoot" preload="auto">
 		<source src="sound/shoot.mp3" type="audio/ogg">
 	</audio>
-
+	<audio id="heal" preload="auto">
+		<source src="sound/heal.mp3" type="audio/ogg">
+	</audio>
+	<video autoplay loop id="vdobg">
+  		<source src="vdo/bg.mp4" type="video/mp4">
+	</video>
 
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
+	#vdobg {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -1;
+	}
 	/* Button */
 	* {
 		-webkit-box-sizing: border-box;
@@ -178,7 +193,7 @@
     height: 100%;
     width:100%;
     display: none;
-    background-image: url("images/uni.png");
+    background-image: url("images/.png");
 	}
 	/* Start game screen */
 	@import url('https://fonts.googleapis.com/css?family=Pacifico');
@@ -190,7 +205,7 @@
 	height: 100%;
 	width: 100%;
 	display : block;
-	background-image: url("images/uni.png");
+	background-image: url("images/.png");
 	}
 	#input{
 		position:absolute;
@@ -246,12 +261,13 @@
 var end_sound = document.getElementById("endscreen");
 var start_sound = document.getElementById("startscreen");
 var bgvol = document.getElementById("bgvolume");
+bgvol.volume = 0.05;
+start_sound.volume = 0.07;
+end_sound.volume = 0.08;
 end_sound.pause();
 start_sound.play();
 bgvol.pause();
-bgvol.volume = 0.05;
-start_sound.volume = 0.05;
-end_sound.volume = 0.08;
+
 function sound(id){
         document.getElementById(id).play();
     }
@@ -493,6 +509,7 @@ var bulletsArray = [],
 	bullet_height = 20,
 	bullet_last_time = 0,
 	bullet_timer = 150;
+	speed = 0;
 var bulla = 0,	bullb = 1,	bullc = 0,	bulld = 0,	bulle = 0,	bullf = 0,	bullg = 0,	bullh = 0;
 var a=0, b=0, cc=0,d=0, f=0, g=0, h=0, e=0;
 
@@ -552,11 +569,10 @@ function fire(){
 	if (bullg) {new bullet(x, y, 10, 10, 20, 0);}
 	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);}
 
-	shot.volume = 0.05;
-	shot.currentTime = 0;
-	sound("shot");
-	new bullet(x, y, bullet_width, bullet_height, speed);
-
+	shoot.volume = 0.05;
+	shoot.currentTime = 0;
+	sound("shoot");
+	bullet(x, y, bullet_width, bullet_height, speed);
 
 }
 function roubullest(){
@@ -653,8 +669,8 @@ function handleCollisions(){
 				if (enemy.item == 1) {
 					if (player.power < 200) {
 						player.power += 10; score += 10;
-						x.currentTime = 0;
-						sound("x");
+						heal.currentTime = 0;
+						sound("heal");
 					}
 				}
 				enemy.delete();
@@ -668,6 +684,7 @@ function died(){
 	document.body.style.cursor = '';
 	bgvol.pause();
 	end_sound.play();
+	document.getElementById('vdobg').style.zIndex = -1;
 }
 function endgame(){
 	window.location.reload();
@@ -683,6 +700,7 @@ function startgame(){
 	click_c = 0;
 	bgvol.play();
 	start_sound.pause();
+	document.getElementById('vdobg').style.zIndex = -4;
 	bulla = 0;
 	bullb = 1;
 	bullc = 0;
