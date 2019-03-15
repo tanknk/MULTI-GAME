@@ -192,17 +192,19 @@ var enemyArray = [],
 	enemy_width = 55,
 	enemy_height = 43,
 	enemy_timer = 500,
+	random_i = 5,
 	enemy_img = new Image();
 	enemy_img.src = 'images/enemy2.png';
 	boom_img = new Image();
 	boom_img.src = 'images/boom.png';
+	heal_img = new Image();
+	heal_img.src = 'images/heal.png';
 // CREATE ENEMY OBJECT
-function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point){
+function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point,item){
 	this.x = x;
 	this.y = y;
 	this.dx = dx;
 	this.dy = dy;
-	this.img = enemy_img;
 	this.width = enemy_width;
 	this.height = enemy_height;
 	this.rotation = rotation;
@@ -210,7 +212,11 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	enemyArray[enemyIndex] = this;
 	this.id = enemyIndex;
 	this.point = point;
+	this.item = item;
 
+	if (this.item == 1)
+	{this.img = heal_img;}
+		else {this.img = enemy_img;}
 	if (this.point < 2) {
 		if(this.rotation < 0.3){
 			this.dx = this.dx;
@@ -283,11 +289,12 @@ function create_enemy(){
 		var dx = -3;
 		var dy = 1;
 	}
+	if (random_i >Math.floor(Math.random() * 100)) {var random_heal_or_enemy =1;} else {var random_heal_or_enemy =0;}
 
 	var rotation = Math.random();
 	point = random_create_enemy;
 
-	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point);
+	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, random_heal_or_enemy);
 }
 // BULLETS SETUP
 var bulletsArray = [],
@@ -363,7 +370,8 @@ function handleCollisions(){
 	});
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
-				player.power += -20;
+				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}} else {player.power += -20;}
+
 				enemy.delete();
 			}
 		});
