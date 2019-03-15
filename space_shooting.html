@@ -539,7 +539,9 @@ function fire(){
 	
 }
 function roubullest(){
-	b = bullb; cc = bullc; d = bulld;
+	b = bullb; 
+	cc = bullc; 
+	d = bulld;
 	e = bulle;
 	f = bullf;
 	g = bullg;
@@ -653,13 +655,13 @@ function animate(currentTime){
     var animation = requestAnimationFrame(animate);
 	c.clearRect(0,0, canvas.width, canvas.height);
 	// SCORE
-	c.font = '30px arial';
+	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('SCORE: '+score, 20, 40);
+	c.fillText('SCORE : '+score, 20, 40);
 	// PLAYER POWER
-	c.font = '30px arial';
+	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('POWER: '+player.power+"%", innerWidth-210, 40);
+	c.fillText('POWER : '+player.power+"%", innerWidth-210, 40);
 	// DRAW PLAYER
 	player.draw();
 	// CREATE NEW ENEMY EVERY 1 SECONDS
