@@ -3,76 +3,81 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Space X</title>
+<link rel="shortcut icon" href="/favicon.png" type="image/png">
+<link rel="shortcut icon" type="image/png" href="images/360.png" />
 </head>
 <body style="height: 100%; margin:0 0 0 0;">
 <!-- Start game screen -->
 <center>
 	<div id="startGame">
-				<a>Space X</a>
-				<div class="buttons">
-					<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
-				</div>
-
-
+		<center><a>Space X</a></center>
+		<div class="buttons">
+			<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 		</div>
-
 	</div>
 </center>
 <!-- End game screen -->
 <center>
     <div id="endGame">
-        <div id="endContent">
-            <h1 id="gameover">Game Over</h1>
-            <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
-		</div>
+        <a id="endtext">Game Over</a><br><br>
+        <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
 		<div class="buttons">
-				<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
+			<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
 		</div>
     </div>
 </center>
-	<!-- Background -->
-
-	<div class='stars'></div>
-	<div class='twinkling'></div>
-	<div class='clouds'></div>
-	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-	<!-- Sound -->
-	<audio id="bgvolume" autoplay loop>
-		<source src="sound/playing.mp3" type="audio/ogg">
-	</audio>
-	<audio id="startscreen" autoplay loop>
-		<source src="sound/startgame.mp3" type="audio/ogg">
-	</audio>
-	<audio id="endscreen" autoplay loop>
-		<source src="sound/endgame.mp3" type="audio/ogg">
-	</audio>
-	<audio id="attack" preload="auto">
-		<source src="sound/attacksound.mp3" type="audio/ogg">
-	</audio>
-	<audio id="damage" preload="auto">
-		<source src="sound/damage.mp3" type="audio/ogg">
-	</audio>
-	<audio id="diedagain" preload="auto">
-		<source src="sound/died.mp3" type="audio/ogg">
-	</audio>
-	<audio id="shoot" preload="auto">
-		<source src="sound/shoot.mp3" type="audio/ogg">
-	</audio>
-	<audio id="heal" preload="auto">
-		<source src="sound/heal.mp3" type="audio/ogg">
-	</audio>
-	<audio id="speedup" preload="auto">
-		<source src="sound/speedup.mp3" type="audio/ogg">
-	</audio>
-	<audio id="upgrade" preload="auto">
-		<source src="sound/upgrade.mp3" type="audio/ogg">
-	</audio>
-	<audio id="rotate" preload="auto">
-		<source src="sound/rotate.mp3" type="audio/ogg">
-	</audio>
-	<video autoplay muted id="video-background" loop>
-  		<source src="vdo/background.mp4" type="video/mp4">
-	</video>
+<!-- FIN screen-->
+<center>
+	<div id="fin">
+		<a id="fintext">FIN</a><br><br>
+		<h1 id="score">Score : &nbsp;<span id ="test">0</span></h1>
+		<div class="buttons">
+			<button class="btn-hover color-2" onclick="endgame()">NEW GAME</button>
+		</div>
+	</div>
+</center>
+<!-- Background -->
+<div class='stars'></div>
+<div class='twinkling'></div>
+<div class='clouds'></div>
+<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
+<!-- Sound -->
+<audio id="bgvolume" autoplay loop>
+	<source src="sound/playing.mp3" type="audio/ogg">
+</audio>
+<audio id="startscreen" autoplay loop>
+	<source src="sound/startgame.mp3" type="audio/ogg">
+</audio>
+<audio id="endscreen" autoplay loop>
+	<source src="sound/endgame.mp3" type="audio/ogg">
+</audio>
+<audio id="attack" preload="auto">
+	<source src="sound/attacksound.mp3" type="audio/ogg">
+</audio>
+<audio id="damage" preload="auto">
+	<source src="sound/damage.mp3" type="audio/ogg">
+</audio>
+<audio id="diedagain" preload="auto">
+	<source src="sound/died.mp3" type="audio/ogg">
+</audio>
+<audio id="shoot" preload="auto">
+	<source src="sound/shoot.mp3" type="audio/ogg">
+</audio>
+<audio id="heal" preload="auto">
+	<source src="sound/heal.mp3" type="audio/ogg">
+</audio>
+<audio id="speedup" preload="auto">
+	<source src="sound/speedup.mp3" type="audio/ogg">
+</audio>
+<audio id="upgrade" preload="auto">
+	<source src="sound/upgrade.mp3" type="audio/ogg">
+</audio>
+<audio id="rotate" preload="auto">
+	<source src="sound/rotate.mp3" type="audio/ogg">
+</audio>
+<video autoplay muted id="video-background" loop>
+  	<source src="vdo/background.mp4" type="video/mp4">
+</video>
 
 
 	<!-- BACKGROUND STYLE -->
@@ -93,16 +98,14 @@
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
-
 	.buttons {
 		margin: 10%;
 		position: absolute;
 		top:45%;
 		left:32%;
-		font-family:helvetica, arial, sans-serif;
+		font-family: 'Pacifico', cursive;
 		text-align: center;
 	}
-
 	.btn-hover {
 		width: 200px;
 		font-size: 16px;
@@ -120,7 +123,6 @@
 		-webkit-transition: all .4s ease-in-out;
 		transition: all .4s ease-in-out;
 	}
-
 	.btn-hover:hover {
 		background-position: 100% 0;
 		moz-transition: all .4s ease-in-out;
@@ -128,9 +130,12 @@
 		-webkit-transition: all .4s ease-in-out;
 		transition: all .4s ease-in-out;
 	}
-
 	.btn-hover:focus {
 		outline: none;
+	}
+	.btn-hover.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
 	}
 	.btn-hover.color-3 {
 		background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
@@ -143,7 +148,7 @@
 	/* Body background */
 	body{
 		background: #000 url('images/stars.png') repeat top center;
-		font-family: helvetica, arial, sans-serif;
+		font-family: 'Pacifico', cursive;
 	}
 	.stars, .twinkling, .clouds {
 	    position:absolute;
@@ -204,6 +209,10 @@
     width:100%;
     display: none;
 	}
+	#endtext{
+		top:20%;
+		left:37%;
+	}
 	/* Start game screen */
 	@import url('https://fonts.googleapis.com/css?family=Pacifico');
 	#startGame{
@@ -258,8 +267,22 @@
 	margin: 0;
 	position: absolute;
 	top: 20%;
-	left: 40%;
+	left:40%;
 	animation: rainbow 5s linear infinite;
+	}
+	/* FIN Game Screen */
+	#fin{
+		position: absolute;
+		background-size:cover;
+		top:0%;
+		left:0%;
+		height: 100%;
+		width:100%;
+		display: none;
+	}
+	a#fintext{
+		top:20%;
+		left:45%;
 	}
 </style>
 
@@ -388,9 +411,9 @@ var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_
 	heal_img = new Image();
 	heal_img.src = 'images/heal.png';
 	fireR_img = new Image();
-	fireR_img.src = 'images/boom.png';
+	fireR_img.src = 'images/firerate.png';
 	gun_img = new Image();
-	gun_img.src = 'images/90.png';
+	gun_img.src = 'images/roundbullet.png';
 	boss_img = new Image();
 	boss_img.src = 'images/boss.png';
 	mon_img = new Image();
@@ -444,7 +467,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	}
 	}
 
-	if (item != 4) 
+	if (item != 4)
 		{this.update = function(){
 		this.y += this.dy;
 		this.x += this.dx;
@@ -464,6 +487,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		this.draw();boss_fire();
 			}}
 	
+
 	this.delete = function(){
 		delete enemyArray[this.id];
 	}
@@ -510,8 +534,8 @@ function create_enemy(){
 	point = random_create_enemy;
 	//random_HP
 	if (random_heal_or_enemy != 0) {var hpp = 1;} else {if (ramdom_HP >Math.floor(Math.random() * 100))
-	 {var hpp = 5;enemy_width = 75; enemy_height = 63;}else {var hpp = 1;}} 
-	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, random_heal_or_enemy, hpp); 	
+	 {var hpp = 5;enemy_width = 75; enemy_height = 63;}else {var hpp = 1;}}
+	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, random_heal_or_enemy, hpp);
 }
 // BULLETS SETUP
 var bulletsArray = [],
@@ -567,12 +591,12 @@ function fire(){
 	if (bulld) {new bullet(x, y, bullet_width, bullet_width, -10, -10);}
 	if (bulle) {new bullet(x, y, bullet_width, bullet_width, 0, -20);}
 	if (bullf) {new bullet(x, y, bullet_width, bullet_width, 10, -10);}
-	if (bullg) {new bullet(x, y, bullet_width, bullet_width, 20, 0);} 
-	if (bullh) {new bullet(x-10, y+30, bullet_width, bullet_width, 10, 10);} 
-	shot.volume = 0.05;
-	shot.currentTime = 0;
-	sound("shot");
-	
+	if (bullg) {new bullet(x, y, bullet_width, bullet_width, 20, 0);}
+	if (bullh) {new bullet(x-10, y+30, bullet_width, bullet_width, 10, 10);}
+	shoot.volume = 0.05;
+	shoot.currentTime = 0;
+	sound("shoot");
+
 }
 function roubullest(){
 	b = bullb; cc = bullc; d = bulld; e = bulle; f = bullf;
@@ -667,7 +691,7 @@ function handleCollisions(){
 function died(){
 	sound("diedagain");
     canvas.style.display = 'none';
-    document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
+    document.getElementById('endGame').style.display = 'block';
 	document.body.style.cursor = '';
 	bgvol.pause();
 	end_sound.play();
@@ -688,6 +712,14 @@ function startgame(){
 	bgvol.play(); start_sound.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
 	document.getElementById('video-background').style.zIndex = -4;
+}
+
+function fin(){
+	sound("");
+	canvas.style.display = 'none';
+	document.getElementById('fin').style.display = 'block';
+	document.body.style.cursor = '';
+	bgvol.pause();
 }
 
 // ANIMATION LOOP
