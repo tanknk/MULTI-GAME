@@ -75,6 +75,12 @@
 <audio id="rotate" preload="auto">
 	<source src="sound/rotate.mp3" type="audio/ogg">
 </audio>
+<audio id="bossdied" preload="auto">
+	<source src="sound/bossdied.mp3" type="audio/ogg">
+</audio>
+<audio id="genboss" preload="auto">
+	<source src="sound/genboss.mp3" type="audio/ogg">
+</audio>
 <video autoplay muted id="video-background" loop>
   	<source src="vdo/background.mp4" type="video/mp4">
 </video>
@@ -629,7 +635,8 @@ var summon_num = 2,
 	summon_last_num = 0;
 	boss_num = 0;
 function setboss(){
-	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++;//boss
+	sound("genboss");
+	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 20);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++;//boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
@@ -660,7 +667,7 @@ function handleCollisions(){
 				if (enemy_timer > 150) {if (score %120 == 0) {enemy_timer  -= 25;}}
 				if (ramdom_HP < 35) {if (score+60 %120 == 0) {ramdom_HP += 2;}}
 				if (enemy.item == 5) {summon_last_num  -=1};
-				if (enemy.item == 4){};//บอสตายตรงนี้้้
+				if (enemy.item == 4){player.power = -20}; // บอสตายตรงนี้ <<<<<<<<<
 			}} });
 	});
 	enemyArray.forEach(function(enemy){
@@ -719,11 +726,12 @@ function startgame(){
 }
 
 function fin(){
-	sound("");
+	sound("bossdied");
 	canvas.style.display = 'none';
 	document.getElementById('fin').style.display = 'block';
 	document.body.style.cursor = '';
 	bgvol.pause();
+	
 }
 
 // ANIMATION LOOP
@@ -760,12 +768,20 @@ function animate(currentTime){
 	});
 	// DETECT COLLISIONS
 	handleCollisions();
-	if (score >= 5000) {if (boss_num < 1) {setboss()}}//บอสเกิด
-
-	if(player.power <= 0){
+	if (score >= 50) {if (boss_num < 1) {setboss()}}//บอสเกิด
+		
+	if(player.power == -20) // บอสตายแล้ว player.power = -20
+	{
+		cancelAnimationFrame(animation);
+		fin();
+		document.getElementById("test").innerText = score;
+	}
+		
+	if(player.power <= 0 && player.power > -20){
 		cancelAnimationFrame(animation);
 		died();
 		document.getElementById("test").innerText = score;
+	
 	}
 }
 
