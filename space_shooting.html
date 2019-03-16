@@ -627,8 +627,9 @@ function add_gun(R){
 }
 var summon_num = 2,
 	summon_last_num = 0;
+	boss_num = 0;
 function setboss(){
-	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35//boss
+	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++;//boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
@@ -759,7 +760,7 @@ function animate(currentTime){
 	});
 	// DETECT COLLISIONS
 	handleCollisions();
-	if (score == 5000) {setboss()}//บอสเกิด
+	if (score >= 50) {if (boss_num < 1) {setboss()}}//บอสเกิด
 
 	if(player.power <= 0){
 		cancelAnimationFrame(animation);
