@@ -51,6 +51,12 @@
 <audio id="endscreen" autoplay loop>
 	<source src="sound/endgame.mp3" type="audio/ogg">
 </audio>
+<audio id="bgboss" loop>
+	<source src="sound/boss.mp3" type="audio/ogg">
+</audio>
+<audio id="bgfin" loop>
+	<source src="sound/bgfin.mp3" type="audio/ogg">
+</audio>
 <audio id="attack" preload="auto">
 	<source src="sound/attacksound.mp3" type="audio/ogg">
 </audio>
@@ -81,14 +87,23 @@
 <audio id="genboss" preload="auto">
 	<source src="sound/genboss.mp3" type="audio/ogg">
 </audio>
-<video autoplay muted id="video-background" loop>
-  	<source src="vdo/background.mp4" type="video/mp4">
+<audio id="bossattack" preload="auto">
+	<source src="sound/bossattack.mp3" type="audio/ogg">
+</audio>
+<video autoplay muted id="video-background1" loop>
+  	<source src="vdo/background1.mp4" type="video/mp4">
+</video>
+<video autoplay muted id="video-background2" loop>
+  	<source src="vdo/background2.mp4" type="video/mp4">
+</video>
+<video autoplay muted id="video-background3" loop>
+  	<source src="vdo/background3.mp4" type="video/mp4">
 </video>
 
 
 	<!-- BACKGROUND STYLE -->
 <style type="text/css">
-	#video-background {
+	#video-background1 {
 	position: fixed;
 	right: 0;
 	bottom: 0;
@@ -97,6 +112,26 @@
 	width: auto;
 	height: auto;
 	z-index: -1;
+	}
+	#video-background2 {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -2;
+	}
+	#video-background3 {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -3;
 	}
 	/* Button */
 	* {
@@ -299,11 +334,16 @@ var end_sound = document.getElementById("endscreen");
 var start_sound = document.getElementById("startscreen");
 var bgvol = document.getElementById("bgvolume");
 bgvol.volume = 0.09;
-start_sound.volume = 0.09;
+start_sound.volume = 0.4;
 end_sound.volume = 0.3;
 damage.volume = 0.4;
 shoot.volume = 0.05;
 rotate.volume = 0.15;
+bgboss.volume = 0.3;
+bossattack.volume = 0.5;
+attack.volume = 0.4;
+upgrade.volume = 0.5;
+bgfin.volume = 0.3;
 end_sound.pause();
 start_sound.play();
 bgvol.pause();
@@ -636,12 +676,16 @@ var summon_num = 2,
 	boss_num = 0;
 function setboss(){
 	sound("genboss");
-	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 20);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++;//boss
+	bgvolume.pause();
+	bgboss.play();
+	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
 		summon_last_num += 1;
 		var w = Math.random() * (innerWidth - enemy_width);
+		bossattack.currentTime = 0;
+		sound("bossattack");
 		new enemy( w, -60, 0, 10, boss_img,60, 60, 0, 0, 5, 1);
 	}
 	if (summon_last_num < 0) {summon_last_num = 0}
@@ -663,11 +707,15 @@ function handleCollisions(){
   					attack.currentTime = 0;
 					sound("attack");
 				}, 100);
-				//level
+				// LEVEL
 				if (enemy_timer > 150) {if (score %120 == 0) {enemy_timer  -= 25;}}
 				if (ramdom_HP < 35) {if (score+60 %120 == 0) {ramdom_HP += 2;}}
 				if (enemy.item == 5) {summon_last_num  -=1};
-				if (enemy.item == 4){player.power = -20}; // บอสตายตรงนี้ <<<<<<<<<
+				if (enemy.item == 4){
+					sound("bossdied");
+					bgboss.pause();
+					player.power = -100;
+				}; 																					// บอสตายตรงนี้ <<<<
 			}} });
 	});
 	enemyArray.forEach(function(enemy){
@@ -705,8 +753,9 @@ function died(){
     document.getElementById('endGame').style.display = 'block';
 	document.body.style.cursor = '';
 	bgvol.pause();
+	bgboss.pause();
 	end_sound.play();
-	document.getElementById('video-background').style.zIndex = -1;
+	document.getElementById('video-background2').style.zIndex = -1;
 }
 function endgame(){
 	window.location.reload();
@@ -722,15 +771,18 @@ function startgame(){
 	click_c = 0;
 	bgvol.play(); start_sound.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
-	document.getElementById('video-background').style.zIndex = -4;
+	document.getElementById('video-background1').style.zIndex = -4;
+	document.getElementById('video-background2').style.zIndex = -4;
+	document.getElementById('video-background3').style.zIndex = -4;
 }
 
 function fin(){
-	sound("bossdied");
 	canvas.style.display = 'none';
 	document.getElementById('fin').style.display = 'block';
 	document.body.style.cursor = '';
+	document.getElementById('video-background3').style.zIndex = -1;
 	bgvol.pause();
+	bgfin.play();	
 	
 }
 
@@ -768,16 +820,16 @@ function animate(currentTime){
 	});
 	// DETECT COLLISIONS
 	handleCollisions();
-	if (score >= 50) {if (boss_num < 1) {setboss()}}//บอสเกิด
+	if (score >= 5000) {if (boss_num < 1) {setboss()}}//บอสเกิด
 		
-	if(player.power == -20) // บอสตายแล้ว player.power = -20
+	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
 		cancelAnimationFrame(animation);
 		fin();
 		document.getElementById("test").innerText = score;
 	}
 		
-	if(player.power <= 0 && player.power > -20){
+	if(player.power <= 0 && player.power > -100){
 		cancelAnimationFrame(animation);
 		died();
 		document.getElementById("test").innerText = score;
