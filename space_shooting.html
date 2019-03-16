@@ -403,7 +403,7 @@ var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_
 	gun_img = new Image();
 	gun_img.src = 'images/90.png';
 // CREATE ENEMY OBJECT
-function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point,item){
+function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, item, hp){
 	this.x = x;
 	this.y = y;
 	this.dx = dx;
@@ -416,6 +416,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	this.id = enemyIndex;
 	this.point = point;
 	this.item = item;
+	this.hp = hp;
 
 	if (this.item == 1)
 		{this.img = heal_img;}
@@ -475,8 +476,10 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	}
 }
 // CREATE ENEMY FUNCTION
+var ramdom_HP = 10;
 function create_enemy(){
-	var random_create_enemy = Math.floor(Math.random() * 4);
+	//position
+	var random_create_enemy = Math.floor(Math.random() * 4), enemy_width = 55, enemy_height = 43;
 	if (random_create_enemy == 0) {
 		var x = Math.random() * (innerWidth - enemy_width); //top to below
 		var y = -enemy_height;
@@ -501,19 +504,17 @@ function create_enemy(){
 		var dx = -3;
 		var dy = 1;
 	}
-
+	//random_item
 	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
 	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
-
-	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
-	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
-
 	else {var random_heal_or_enemy =0;}
 
-	var rotation = Math.random();
+	var rotation = Math.random();//rotation
 	point = random_create_enemy;
-
-	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, random_heal_or_enemy);
+	//random_HP
+	if (random_heal_or_enemy != 0) {var hpp = 1;} else {if (ramdom_HP >Math.floor(Math.random() * 100))
+	 {var hpp = 5;enemy_width = 75; enemy_height = 63;}else {var hpp = 1;}} 
+	new enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, random_heal_or_enemy, hpp);
 }
 // BULLETS SETUP
 var bulletsArray = [],
@@ -563,16 +564,6 @@ function bullet(x, y, width, height, speedx, speedy){
 function fire(){
 	var x = (player.x + player.width/2) - bullet_width/2;
 	var y = player.y;
-
-	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
-	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
-	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
-	if (bulld) {new bullet(x, y, 10, 10, -10, -10);}
-	if (bulle) {new bullet(x, y, 10, 10, 0, -20);}
-	if (bullf) {new bullet(x, y, 10, 10, 10, -10);}
-	if (bullg) {new bullet(x, y, 10, 10, 20, 0);}
-	if (bullh) {new bullet(x-10, y+30, 15, 15, 10, 10);}
-
 	if (bulla) {new bullet(x-3, y+15, 10, 10, 0, 20);}
 	if (bullb) {new bullet(x-10, y+30, 10, 10, -10, 10);}
 	if (bullc) {new bullet(x, y, 10, 10, -20, 0);}
@@ -627,6 +618,8 @@ function handleCollisions(){
 		enemyArray.forEach(function(enemy){
 			if(collides(bullet,enemy)){
 				bullet.delete();
+				enemy.hp = enemy.hp-1
+				if (enemy.hp <= 0) {
 				enemy.img = boom_img;
 				enemy.dx = 0;
 				enemy.dy =0;
@@ -637,27 +630,22 @@ function handleCollisions(){
 					sound("attack");
 				}, 100);
 				//level
-				if (enemy_timer > 150) {
-					if (score%120 == 0) {
-						enemy_timer  -= 25;
-					}
-				}
-
-			}
-		});
+				if (enemy_timer > 150) {if (score%120 == 0) {enemy_timer  -= 25;ramdom_HP += 2;}}
+			}} });
 	});
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}}//heal
 
-				else if (enemy.item == 2 && bullet_timer > 75) {
-					bullet_timer -= 15;
+				else if (enemy.item == 2 && bullet_timer > 90) {
+					bullet_timer -= 10;
 					speedup.currentTime = 0;
 					sound("speedup");
 					}
 				else if (enemy.item == 3){
 					add_gun((Math.floor(Math.random() * 8)+1));
 					upgrade.currentTime = 0;
+					bullet_timer += 30;
 					sound("upgrade");
 				}
 
