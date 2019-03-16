@@ -3,76 +3,81 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Space X</title>
+<link rel="shortcut icon" href="/favicon.png" type="image/png">
+<link rel="shortcut icon" type="image/png" href="images/360.png" />
 </head>
 <body style="height: 100%; margin:0 0 0 0;">
 <!-- Start game screen -->
 <center>
 	<div id="startGame">
-				<a>Space X</a>
-				<div class="buttons">
-					<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
-				</div>
-
-
+		<a>Space X</a>
+		<div class="buttons">
+			<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 		</div>
-
 	</div>
 </center>
 <!-- End game screen -->
 <center>
     <div id="endGame">
-        <div id="endContent">
-            <h1 id="gameover">Game Over</h1>
-            <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
-		</div>
+        <h1 id="gameover">Game Over</h1>
+        <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
 		<div class="buttons">
-				<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
+			<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
 		</div>
     </div>
 </center>
-	<!-- Background -->
-
-	<div class='stars'></div>
-	<div class='twinkling'></div>
-	<div class='clouds'></div>
-	<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-	<!-- Sound -->
-	<audio id="bgvolume" autoplay loop>
-		<source src="sound/playing.mp3" type="audio/ogg">
-	</audio>
-	<audio id="startscreen" autoplay loop>
-		<source src="sound/startgame.mp3" type="audio/ogg">
-	</audio>
-	<audio id="endscreen" autoplay loop>
-		<source src="sound/endgame.mp3" type="audio/ogg">
-	</audio>
-	<audio id="attack" preload="auto">
-		<source src="sound/attacksound.mp3" type="audio/ogg">
-	</audio>
-	<audio id="damage" preload="auto">
-		<source src="sound/damage.mp3" type="audio/ogg">
-	</audio>
-	<audio id="diedagain" preload="auto">
-		<source src="sound/died.mp3" type="audio/ogg">
-	</audio>
-	<audio id="shoot" preload="auto">
-		<source src="sound/shoot.mp3" type="audio/ogg">
-	</audio>
-	<audio id="heal" preload="auto">
-		<source src="sound/heal.mp3" type="audio/ogg">
-	</audio>
-	<audio id="speedup" preload="auto">
-		<source src="sound/speedup.mp3" type="audio/ogg">
-	</audio>
-	<audio id="upgrade" preload="auto">
-		<source src="sound/upgrade.mp3" type="audio/ogg">
-	</audio>
-	<audio id="rotate" preload="auto">
-		<source src="sound/rotate.mp3" type="audio/ogg">
-	</audio>
-	<video autoplay muted id="video-background" loop>
-  		<source src="vdo/background.mp4" type="video/mp4">
-	</video>
+<!-- FIN screen-->
+<center>
+	<div id="fin">
+		<a>FIN</a>
+		<h1 id="score">Score: &nbsp;<span id ="test">0</span></h1>
+		<div class="buttons">
+			<button class="btn-hover color-3" onclick="endgame()">NEW GAME?</button>
+		</div>
+	</div>
+</center>
+<!-- Background -->
+<div class='stars'></div>
+<div class='twinkling'></div>
+<div class='clouds'></div>
+<canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
+<!-- Sound -->
+<audio id="bgvolume" autoplay loop>
+	<source src="sound/playing.mp3" type="audio/ogg">
+</audio>
+<audio id="startscreen" autoplay loop>
+	<source src="sound/startgame.mp3" type="audio/ogg">
+</audio>
+<audio id="endscreen" autoplay loop>
+	<source src="sound/endgame.mp3" type="audio/ogg">
+</audio>
+<audio id="attack" preload="auto">
+	<source src="sound/attacksound.mp3" type="audio/ogg">
+</audio>
+<audio id="damage" preload="auto">
+	<source src="sound/damage.mp3" type="audio/ogg">
+</audio>
+<audio id="diedagain" preload="auto">
+	<source src="sound/died.mp3" type="audio/ogg">
+</audio>
+<audio id="shoot" preload="auto">
+	<source src="sound/shoot.mp3" type="audio/ogg">
+</audio>
+<audio id="heal" preload="auto">
+	<source src="sound/heal.mp3" type="audio/ogg">
+</audio>
+<audio id="speedup" preload="auto">
+	<source src="sound/speedup.mp3" type="audio/ogg">
+</audio>
+<audio id="upgrade" preload="auto">
+	<source src="sound/upgrade.mp3" type="audio/ogg">
+</audio>
+<audio id="rotate" preload="auto">
+	<source src="sound/rotate.mp3" type="audio/ogg">
+</audio>
+<video autoplay muted id="video-background" loop>
+  	<source src="vdo/background.mp4" type="video/mp4">
+</video>
 
 
 	<!-- BACKGROUND STYLE -->
@@ -93,7 +98,6 @@
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
-
 	.buttons {
 		margin: 10%;
 		position: absolute;
@@ -102,7 +106,6 @@
 		font-family:helvetica, arial, sans-serif;
 		text-align: center;
 	}
-
 	.btn-hover {
 		width: 200px;
 		font-size: 16px;
@@ -120,7 +123,6 @@
 		-webkit-transition: all .4s ease-in-out;
 		transition: all .4s ease-in-out;
 	}
-
 	.btn-hover:hover {
 		background-position: 100% 0;
 		moz-transition: all .4s ease-in-out;
@@ -128,7 +130,6 @@
 		-webkit-transition: all .4s ease-in-out;
 		transition: all .4s ease-in-out;
 	}
-
 	.btn-hover:focus {
 		outline: none;
 	}
@@ -260,6 +261,16 @@
 	top: 20%;
 	left: 40%;
 	animation: rainbow 5s linear infinite;
+	}
+	/* FIN Game Screen */
+	#fin{
+		position: absolute;
+		background-size:cover;
+		top:0%;
+		left:0%;
+		height: 100%;
+		width:100%;
+		display: none;
 	}
 </style>
 
