@@ -10,7 +10,7 @@
 <!-- Start game screen -->
 <center>
 	<div id="startGame">
-		<a>Space X</a>
+		<center><a>Space X</a></center>
 		<div class="buttons">
 			<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 		</div>
@@ -19,7 +19,7 @@
 <!-- End game screen -->
 <center>
     <div id="endGame">
-        <h1 id="gameover">Game Over</h1>
+        <a id="endtext">Game Over</a><br><br>
         <h1 id="score">Score :&nbsp;<span id="test">0</span></h1>
 		<div class="buttons">
 			<button class="btn-hover color-3" onclick="endgame()">TRY AGAIN?</button>
@@ -29,10 +29,10 @@
 <!-- FIN screen-->
 <center>
 	<div id="fin">
-		<a>FIN</a>
-		<h1 id="score">Score: &nbsp;<span id ="test">0</span></h1>
+		<a id="fintext">FIN</a><br><br>
+		<h1 id="score">Score : &nbsp;<span id ="test">0</span></h1>
 		<div class="buttons">
-			<button class="btn-hover color-3" onclick="endgame()">NEW GAME?</button>
+			<button class="btn-hover color-2" onclick="endgame()">NEW GAME</button>
 		</div>
 	</div>
 </center>
@@ -103,7 +103,7 @@
 		position: absolute;
 		top:45%;
 		left:32%;
-		font-family:helvetica, arial, sans-serif;
+		font-family: 'Pacifico', cursive;
 		text-align: center;
 	}
 	.btn-hover {
@@ -133,6 +133,10 @@
 	.btn-hover:focus {
 		outline: none;
 	}
+	.btn-hover.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+	}
 	.btn-hover.color-3 {
 		background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
 		box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
@@ -144,7 +148,7 @@
 	/* Body background */
 	body{
 		background: #000 url('images/stars.png') repeat top center;
-		font-family: helvetica, arial, sans-serif;
+		font-family: 'Pacifico', cursive;
 	}
 	.stars, .twinkling, .clouds {
 	    position:absolute;
@@ -205,6 +209,10 @@
     width:100%;
     display: none;
 	}
+	#endtext{
+		top:20%;
+		left:37%;
+	}
 	/* Start game screen */
 	@import url('https://fonts.googleapis.com/css?family=Pacifico');
 	#startGame{
@@ -259,7 +267,7 @@
 	margin: 0;
 	position: absolute;
 	top: 20%;
-	left: 40%;
+	left:40%;
 	animation: rainbow 5s linear infinite;
 	}
 	/* FIN Game Screen */
@@ -271,6 +279,10 @@
 		height: 100%;
 		width:100%;
 		display: none;
+	}
+	a#fintext{
+		top:20%;
+		left:45%;
 	}
 </style>
 
@@ -622,7 +634,6 @@ function add_gun(R){
 }
 function setboss(){
 	if (score == 20) {new enemy( 1000, 60, 5, 0, boss_img,256, 256, 0, 0, 4, 300);score +=10;}//boss
-
 }
 // DETECT COLLISION
 function handleCollisions(){
@@ -681,7 +692,7 @@ function handleCollisions(){
 function died(){
 	sound("diedagain");
     canvas.style.display = 'none';
-    document.getElementById('endGame').style.display = 'block'; //แสดงหน้า endGame ที่ซ่อนไว้
+    document.getElementById('endGame').style.display = 'block';
 	document.body.style.cursor = '';
 	bgvol.pause();
 	end_sound.play();
@@ -702,6 +713,14 @@ function startgame(){
 	bgvol.play(); start_sound.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
 	document.getElementById('video-background').style.zIndex = -4;
+}
+
+function fin(){
+	sound("");
+	canvas.style.display = 'none';
+	document.getElementById('fin').style.display = 'block';
+	document.body.style.cursor = '';
+	bgvol.pause();
 }
 
 // ANIMATION LOOP
