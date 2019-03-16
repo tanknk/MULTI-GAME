@@ -544,7 +544,7 @@ var bulletsArray = [],
 	bullet_height = 20,
 	bullet_last_time = 0,
 	bullet_timer = 150;
-	speed = 0;
+	bullet_speed = 0;
 var bulla = 0,	bullb = 1,	bullc = 0,	bulld = 0,	bulle = 0,	bullf = 0,	bullg = 0,	bullh = 0;
 var a=0, b=0, cc=0,d=0, f=0, g=0, h=0, e=0;
 
@@ -585,14 +585,14 @@ function bullet(x, y, width, height, speedx, speedy){
 function fire(){
 	var x = (player.x + player.width/2) - bullet_width/2;
 	var y = player.y;
-	if (bulla) {new bullet(x, y+30, bullet_width, bullet_width, 0, 20);}//      ^
-	if (bullb) {new bullet(x+12, y+22, bullet_width, bullet_width, -10, 10);}//       ^>
-	if (bullc) {new bullet(x, y+25,  bullet_width,  bullet_width, -20, 0);}//       >
-	if (bulld) {new bullet(x+15, y+25, bullet_width, bullet_width, -10, -10);}//      v>
-	if (bulle) {new bullet(x, y+25, bullet_width, bullet_width, 0, -20);}//  v
-	if (bullf) {new bullet(x, y+25, bullet_width, bullet_width, 10, -10);}//   <v	
-	if (bullg) {new bullet(x, y+30, bullet_width, bullet_width, 20, 0);}//     <
-	if (bullh) {new bullet(x-15, y+25, bullet_width, bullet_width, 10, 10);}// <^
+	if (bulla) {new bullet(x, y+30, bullet_width, bullet_width, 0, bullet_speed+20);}//      ^
+	if (bullb) {new bullet(x+12, y+22, bullet_width, bullet_width,bullet_speed/-2+ -10, bullet_speed/2+10);}//       ^>
+	if (bullc) {new bullet(x, y+25,  bullet_width,  bullet_width, bullet_speed/-1+-20, 0);}//       >
+	if (bulld) {new bullet(x+15, y+25, bullet_width, bullet_width, bullet_speed/-2+-10, bullet_speed/-2+-10);}//      v>
+	if (bulle) {new bullet(x, y+25, bullet_width, bullet_width, 0, bullet_speed/-2+-20);}//  v
+	if (bullf) {new bullet(x, y+25, bullet_width, bullet_width,bullet_speed/2+ 10, bullet_speed/-2+-10);}//   <v	
+	if (bullg) {new bullet(x, y+30, bullet_width, bullet_width, bullet_speed+20, 0);}//     <
+	if (bullh) {new bullet(x-15, y+25, bullet_width, bullet_width, bullet_speed/2+10, bullet_speed/2+10);}// <^
 	shoot.volume = 0.05;
 	shoot.currentTime = 0;
 	sound("shoot");
@@ -628,7 +628,7 @@ function add_gun(R){
 var summon_num = 2,
 	summon_last_num = 0;
 function setboss(){
-	if (score == 5000) {new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35}//boss
+	new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35//boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
@@ -669,10 +669,12 @@ function handleCollisions(){
 				else if (enemy.item == 2 ) {if ( bullet_timer >= 150) {
 					bullet_timer -= 25;
 					bullet_width += 2.5;
+					bullet_speed += 30;
 					setTimeout(function() {
   					bullet_timer += 25;
   					bullet_width -= 2.5;
-										}, 15000);
+  					bullet_speed -= 30;
+										}, 20000);
 					speedup.currentTime = 0;
 					sound("speedup");
 					}}
