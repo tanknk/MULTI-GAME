@@ -302,7 +302,7 @@ addEventListener("mousemove", function(event)
 // PLAYER SETUP
 var player = {},
     player_width =  80,
-	player_height = 55,
+	player_height = 80,
 	player_img = new Image();
 	player_img.src = 'images/360.png';
 // CREATE PLAYER
@@ -329,18 +329,7 @@ var player = {},
 // ROTATE
 var click_c = 0;
 addEventListener("click", function(event){
-	if(click_c == 1 || click_c == 3 || click_c == 5 || click_c == 7){
-		player.width = 95;
-		player.height = 90;
-	}
-	else if(click_c == 2 || click_c == 6){
-		player.width = 90;
-		player.height = 80;
-	}
-	else if(click_c == 0 ||click_c == 4 || click_c == 8){
-		player.width = 80;
-		player.height = 55;
-	}
+	
 	if(click_c == 0){
 		player_img.src = 'images/360.png';
 		click_c++;
@@ -404,6 +393,8 @@ var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_
 	gun_img.src = 'images/90.png';
 	boss_img = new Image();
 	boss_img.src = 'images/boss.png';
+	mon_img = new Image();
+	mon_img.src = 'images/90.png';
 // CREATE ENEMY OBJECT
 function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, item, hp){
 	this.x = x;
@@ -458,10 +449,11 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		this.y += this.dy;
 		this.x += this.dx;
 		if(this.y > innerHeight + this.height){
-			this.delete();
+			this.delete()
+			if (item == 5) {summon_last_num  -=1};
 		}
 		if(this.x > innerWidth + this.width){
-		this.delete();
+		this.delete();if (item == 5) {summon_last_num  -=1};
 		}
 		this.draw();
 		}}
@@ -469,8 +461,8 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		this.x -= this.dx;
 		if (this.x > innerWidth- this.width) {this.dx *=-1}
 		if (this.x < 0+ this.width) {this.dx *=-1}
-		this.draw();
-	}}
+		this.draw();boss_fire();
+			}}
 	
 	this.delete = function(){
 		delete enemyArray[this.id];
@@ -609,9 +601,17 @@ function add_gun(R){
 	else if (R==8) {if (bullh == 1) {R = 1;} else {bullh = 1}}
 	bullet_timer += 15;
 }
+var summon_num = 4,
+	summon_last_num = 0;
 function setboss(){
-	if (score == 20) {new enemy( 1000, 60, 5, 0, boss_img,256, 256, 0, 0, 4, 300);score +=10;}//boss
-	
+	if (score == 20) {new enemy( 1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;}//boss
+}
+function boss_fire() {
+	if(summon_last_num < summon_num){
+		summon_last_num += 1;
+		var w = Math.random() * (innerWidth - enemy_width);
+		new enemy( w, -60, 0, 10, boss_img,60, 60, 0, 0, 5, 1);
+	}
 }
 // DETECT COLLISION
 function handleCollisions(){
@@ -632,37 +632,34 @@ function handleCollisions(){
 				}, 100);
 				//level
 				if (enemy_timer > 150) {if (score %240 == 0) {enemy_timer  -= 25;}}
-				if (ramdom_HP < 40) {if (score+120 %240 == 0) {ramdom_HP += 2;}}
+				if (ramdom_HP < 35) {if (score+120 %240 == 0) {ramdom_HP += 2;}}
+				if (enemy.item == 5) {summon_last_num  -=1};
+				if (enemy.item == 4){};//บอสตายตรงนี้้้
 			}} });
 	});
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
-				if (enemy.item == 1) {if (player.power < 200) {player.power += 10; score += 10;}}//heal
-
-				else if (enemy.item == 2 && bullet_timer <= 150) {
-					bullet_timer -= 50;
-					bullet_width += 5;
+				if (enemy.item == 1) {	if (player.power < 200) {player.power += 10; score += 10;heal.currentTime = 0;
+						sound("heal");		}}
+				else if (enemy.item == 2 ) {if ( bullet_timer >= 150) {
+					bullet_timer -= 25;
+					bullet_width += 2.5;
 					setTimeout(function() {
-  					bullet_timer += 50;
-  					bullet_width -= 5;
-										}, 30000);
+  					bullet_timer += 25;
+  					bullet_width -= 2.5;
+										}, 15000);
 					speedup.currentTime = 0;
 					sound("speedup");
-					}
+					}}
 				else if (enemy.item == 3){
 					add_gun((Math.floor(Math.random() * 8)+1));
 					upgrade.currentTime = 0;
 					sound("upgrade");
 				}
 
-				else {player.power += -20; sound("damage");damage.currentTime = 0;}
-				if (enemy.item == 1) {
-					if (player.power < 200) {
-						player.power += 10; score += 10;
-						heal.currentTime = 0;
-						sound("heal");
-					}
-				}
+				else {player.power += -20; sound("damage");damage.currentTime = 0;if (enemy.item == 5) {summon_last_num  -=1};}
+				
+				
 				if(enemy.item != 4){enemy.delete()};
 			}
 		});
@@ -727,7 +724,7 @@ function animate(currentTime){
 	});
 	// DETECT COLLISIONS
 	handleCollisions();
-	if (score == 20) {setboss()}
+	if (score == 20) {setboss()}//บอสเกิด
 
 	if(player.power <= 0){
 		cancelAnimationFrame(animation);
