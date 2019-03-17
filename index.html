@@ -343,7 +343,7 @@ bgvolume.volume = 0.09;
 startscreen.volume = 0.4;
 endscreen.volume = 0.3;
 damage.volume = 0.4;
-shoot.volume = 0.05;
+shoot.volume = 0.09;
 rotate.volume = 0.15;
 bgboss.volume = 0.3;
 bossattack.volume = 0.5;
@@ -855,7 +855,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 50) {if (boss_num < 1) {setboss()}} // บอสเกิด
+	if (score >= 5000) {if (boss_num < 1) {setboss()}} // บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
