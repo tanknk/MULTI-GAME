@@ -460,6 +460,10 @@ var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_
 	random_i = 8,
 	enemy_img = new Image();
 	enemy_img.src = 'images/Meteor_02.png';
+	enemy_img2 = new Image();
+	enemy_img2.src = 'images/Meteor_05.png';
+	enemy_img3 = new Image();
+	enemy_img3.src = 'images/Meteor_07.png';
 	boom_img = new Image();
 	boom_img.src = 'images/boom.png';
 	heal_img = new Image();
@@ -498,7 +502,9 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		{this.img = fireR_img;}
 	else if (this.item == 3)
 		{this.img = gun_img;}
-	else {this.img = enemy_img;}
+	else if (this.item == 0){this.img = enemy_img;}
+	else if (this.item == 6){this.img = enemy_img2;}
+	else {this.img = enemy_img3;}
 	if (this.point < 2) {
 		if(this.rotation < 0.3){
 			this.dx = this.dx;
@@ -548,6 +554,8 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 
 // Create enemy function
 var ramdom_HP = 10;
+numlis = [0, 6, 7, 6, 7, 0];
+index = 0;
 function create_enemy(){
 	//Position
 	var random_create_enemy = Math.floor(Math.random() * 4), enemy_width = 55, enemy_height = 43;
@@ -578,7 +586,11 @@ function create_enemy(){
 	//Random item
 	if (random_i >Math.floor(Math.random() * 100)) {if (Math.floor(Math.random() * 10) > 3) {var random_heal_or_enemy =1;}
 	else if (Math.floor(Math.random() * 3 )!= 2) {var random_heal_or_enemy =2;} else {var random_heal_or_enemy =3;}}
-	else {var random_heal_or_enemy =0;}
+	else {
+		var random_heal_or_enemy =numlis[index];
+		index += 1;
+		if(index == 5){index = 0;}
+	}
 
 	var rotation = Math.random();//rotation
 	point = random_create_enemy;
