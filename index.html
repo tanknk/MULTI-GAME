@@ -49,7 +49,7 @@
 	<source src="sound/playing.mp3" type="audio/ogg">
 </audio>
 <audio id="startscreen" autoplay loop>
-	<source src="sound/startgame.mp3" type="audio/ogg">
+	<source src="sound/startgame.mp3" type="audio/mp3">
 </audio>
 <audio id="endscreen" loop>
 	<source src="sound/endgame.mp3" type="audio/ogg">
@@ -337,12 +337,9 @@
 
 <script type="text/javascript">
 // Sound set
-var end_sound = document.getElementById("endscreen");
-var start_sound = document.getElementById("startscreen");
-var bgvol = document.getElementById("bgvolume");
-bgvol.volume = 0.09;
-start_sound.volume = 0.4;
-end_sound.volume = 0.3;
+bgvolume.volume = 0.09;
+startscreen.volume = 0.4;
+endscreen.volume = 0.3;
 damage.volume = 0.4;
 shoot.volume = 0.05;
 rotate.volume = 0.15;
@@ -351,9 +348,7 @@ bossattack.volume = 0.5;
 attack.volume = 0.4;
 upgrade.volume = 0.5;
 bgfin.volume = 0.3;
-end_sound.pause();
-start_sound.play();
-bgvol.pause();
+startscreen.play();
 function sound(id){
         document.getElementById(id).play();
     }
@@ -761,9 +756,9 @@ function died(){
     canvas.style.display = 'none';
     document.getElementById('endGame').style.display = 'block';
 	document.body.style.cursor = '';
-	bgvol.pause();
+	bgvolume.pause();
 	bgboss.pause();
-	end_sound.play();
+	endscreen.play();
 	document.getElementById("video-background2").play();
 	document.getElementById('video-background2').style.zIndex = -1;
 }
@@ -782,7 +777,7 @@ function startgame(){
 	document.body.style.cursor = 'none';
 	animate();
 	click_c = 0;
-	bgvol.play(); start_sound.pause();
+	bgvolume.play(); startscreen.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
 	document.getElementById("video-background1").pause();
 	document.getElementById('video-background1').style.zIndex = -4;
@@ -797,7 +792,7 @@ function fin(){
 	document.body.style.cursor = '';
 	document.getElementById("video-background3").play();
 	document.getElementById('video-background3').style.zIndex = -1;
-	bgvol.pause();
+	bgvolume.pause();
 	bgfin.play();	
 	
 }
