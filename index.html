@@ -459,9 +459,9 @@ addEventListener("click", function(event){
 var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_timer = 500,
 	random_i = 8,
 	enemy_img = new Image();
-	enemy_img.src = 'images/Meteor_02.png';
+	enemy_img.src = 'images/Meteor_10.png';
 	enemy_img2 = new Image();
-	enemy_img2.src = 'images/Meteor_05.png';
+	enemy_img2.src = 'images/Meteor_02.png';
 	enemy_img3 = new Image();
 	enemy_img3.src = 'images/Meteor_07.png';
 	boom_img = new Image();
@@ -492,7 +492,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	enemyArray[enemyIndex] = this;
 	this.id = enemyIndex;
 	this.point = point;//เกิดด้านไหน
-	this.item = item;//ประเภทของ 0 = enemy;   1,2,3 = ไอเท็ม; 4 = boss; 5 = กระสุนบอส;
+	this.item = item;//ประเภทของ 0,6,7 = enemy;   1,2,3 = ไอเท็ม; 4 = boss; 5 = กระสุนบอส;
 	this.hp = hp;//ก็HPไง(เลือดก็ได้)          ^^^1 = Heal ; 2 = Charge bullet; 3 =Laser gun ;
 	if (this.item == 1)
 		{this.img = heal_img;}
@@ -502,9 +502,15 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		{this.img = fireR_img;}
 	else if (this.item == 3)
 		{this.img = gun_img;}
-	else if (this.item == 0){this.img = enemy_img;}
-	else if (this.item == 6){this.img = enemy_img2;}
-	else {this.img = enemy_img3;}
+	else if (this.item == 0)
+		{this.img = enemy_img;}
+	else if (this.item == 6)
+		{this.img = enemy_img2;}
+	else if (this.item == 7)
+		{this.img = enemy_img3;}
+	else if (this.item == 4)
+		{this.img = boss_img;}
+	else {this.img = boss_fire_img;}
 	if (this.point < 2) {
 		if(this.rotation < 0.3){
 			this.dx = this.dx;
@@ -696,7 +702,7 @@ var summon_num = 2,
 function setboss(){
 	sound("genboss");
 	bgvolume.pause();
-	bgboss.play();
+	bgboss.play();									//    v เลือดบอสอยู่นี่ครับ
 	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
 }
 //ยิงกระสุนของบอส
@@ -706,7 +712,7 @@ function boss_fire() {
 		var w = Math.random() * (innerWidth - enemy_width);
 		bossattack.currentTime = 0;
 		sound("bossattack");
-		new enemy( w, -60, 0, 10, boss_fire_img,60, 60, 0, 0, 5, 1);
+		new enemy( w, -60, 0, 10, boss_fire_img,37, 75, 0, 0, 5, 1);
 	}
 	if (summon_last_num < 0) {summon_last_num = 0}
 }
@@ -853,7 +859,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 5000) {if (boss_num < 1) {setboss()}}//บอสเกิด
+	if (score >= 5000) {if (boss_num < 1) {setboss()}} // บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
@@ -870,12 +876,13 @@ function animate(currentTime){
 	
 	}
 }
-// Cheat >>> "helloworld" 
+
 var num = 0;
 var nub = 0;
 var delay = 1;
 document.addEventListener("keypress", function(event) {
 	var key = event.keyCode;
+	// Cheat >>> "helloworld" 
     if(key == 104){nub = 1; num = 0;}
     if(nub == 1){num += key;}
     if(num == 1084)
@@ -891,6 +898,7 @@ document.addEventListener("keypress", function(event) {
         nub = 0;
         num = 0;
     }
+    // volume up +
     if(key == 43 || key == 61)
     {
     	bgvolume.volume = bgvolume.volume + 0.01;
@@ -905,6 +913,7 @@ document.addEventListener("keypress", function(event) {
 		upgrade.volume = upgrade.volume +0.01;
 		bgfin.volume = bgfin.volume +0.01;
     }
+    // volume down -
     if(key == 45)
     {
     	bgvolume.volume = bgvolume.volume - 0.01;
