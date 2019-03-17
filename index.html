@@ -457,6 +457,7 @@ addEventListener("click", function(event){
 
 // Enemy setup
 var index = 0;
+var boss_hp = 0;
 var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_timer = 500,
 	random_i = 8,
 	enemy_img = new Image();
@@ -544,6 +545,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		}}
 	else{this.update = function(){
 		this.x -= this.dx;
+		boss_hp = this.hp;
 		if (this.x > innerWidth- this.width) {this.dx *=-1}
 		if (this.x < 0+ this.width) {this.dx *=-1}
 		this.draw();boss_fire();
@@ -853,7 +855,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 5000) {if (boss_num < 1) {setboss()}} // บอสเกิด
+	if (score >= 50) {if (boss_num < 1) {setboss()}} // บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
@@ -862,12 +864,19 @@ function animate(currentTime){
 		score += 10000;
 		document.getElementById("test2").innerText = score;
 	}
-		
+	// Game Over
 	if(player.power <= 0 && player.power > -100){
 		cancelAnimationFrame(animation);
 		died();
 		document.getElementById("test").innerText = score;
 	
+	}
+	// Boss HP
+	if(boss_hp != 0)
+	{
+		c.font = '30px Pacifico';
+		c.fillStyle = '#fff';
+		c.fillText('BOSS HP : '+boss_hp+"%", 900, 40);
 	}
 }
 
