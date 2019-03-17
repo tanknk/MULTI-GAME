@@ -686,7 +686,7 @@ function setboss(){
 	sound("genboss");
 	bgvolume.pause();
 	bgboss.play();
-	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 10);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
+	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
@@ -836,7 +836,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 50) {if (boss_num < 1) {setboss()}}//บอสเกิด
+	if (score >= 5000) {if (boss_num < 1) {setboss()}}//บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
