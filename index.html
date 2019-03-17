@@ -45,8 +45,17 @@
 <canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
 
 <!-- Sound -->
-<audio id="bgvolume" loop>
+<audio id="bg_music" loop>
 	<source src="sound/playing.mp3" type="audio/ogg">
+</audio>
+<audio id="bg_music2" loop>
+	<source src="sound/playing2.mp3" type="audio/ogg">
+</audio>
+<audio id="bg_music3" loop>
+	<source src="sound/playing3.mp3" type="audio/ogg">
+</audio>
+<audio id="bg_music4" loop>
+	<source src="sound/playing4.mp3" type="audio/ogg">
 </audio>
 <audio id="startscreen" autoplay loop>
 	<source src="sound/startgame.mp3" type="audio/mp3">
@@ -298,17 +307,20 @@
 		transform: translateY(4px);
 	}
 	@keyframes rainbow {
-		0%{color:purple;}
-		16%{color: cadetblue;}
-		32%{color: blue;}
-		48%{color: green;}
-		64%{color: yellow;}
-		80%{color: orangered;}
-		96%{color: red;}
+		0%{color: #B53471;text-shadow: 0 1px 20px #B53471;}
+		5%{color: #12CBC4;text-shadow: 0 1px 40px #12CBC4;}
+		10%{color: #0652DD;text-shadow: 0 1px 60px #0652DD;}
+		20%{color: #C4E538;text-shadow: 0 1px 80px #C4E538;}
+		40%{color: #FFC312;text-shadow: 0 1px 100px #FFC312;}
+		60%{color: #F79F1F;text-shadow: 0 1px 120px #F79F1F;}
+		70%{color: #EE5A24;text-shadow: 0 1px 100px #EE5A24;}
+		80%{color: #ED4C67;text-shadow: 0 1px 80px #ED4C67;}
+		85%{color: #FFEE58;text-shadow: 0 1px 60px #FFEE58;}
+		90%{color: #1976D2;text-shadow: 0 1px 40px #1976D2;}
 	}
 	a {
 	color: #fffbf1;
-	text-shadow: 0 1px 25px #fff;
+	text-shadow: 0 1px 50px #fff;
 	font-size: 80px;
 	font-weight: bold;
 	text-decoration: none;
@@ -339,7 +351,14 @@
 
 <script type="text/javascript">
 // Sound set
-bgvolume.volume = 0.09;
+var music_lis = [bg_music, bg_music2, bg_music3, bg_music4];
+var game_playing = 0;
+var index_music = 1;
+var main_music = music_lis[0];
+bg_music.volume = 0.09;
+bg_music2.volume = 0.3;
+bg_music3.volume = 0.3;
+bg_music4.volume = 0.4;
 startscreen.volume = 0.4;
 endscreen.volume = 0.3;
 damage.volume = 0.4;
@@ -350,6 +369,7 @@ bossattack.volume = 0.5;
 attack.volume = 0.4;
 upgrade.volume = 0.5;
 bgfin.volume = 0.3;
+
 startscreen.play();
 function sound(id){
         document.getElementById(id).play();
@@ -697,7 +717,7 @@ var summon_num = 2,
 	boss_num = 0;
 function setboss(){
 	sound("genboss");
-	bgvolume.pause();
+	main_music.pause();
 	bgboss.play();									//    v เลือดบอสอยู่นี่ครับ
 	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
 }
@@ -780,7 +800,7 @@ function died(){
     canvas.style.display = 'none';
     document.getElementById('endGame').style.display = 'block';
 	document.body.style.cursor = '';
-	bgvolume.pause();
+	main_music.pause();
 	bgboss.pause();
 	endscreen.play();
 	document.getElementById("video-background2").play();
@@ -801,7 +821,7 @@ function startgame(){
 	document.body.style.cursor = 'none';
 	animate();
 	click_c = 0;
-	bgvolume.play(); startscreen.pause();
+	main_music.play(); startscreen.pause();game_playing = 1;
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
 	document.getElementById("video-background1").pause();
 	document.getElementById('video-background1').style.zIndex = -4;
@@ -816,7 +836,7 @@ function fin(){
 	document.body.style.cursor = '';
 	document.getElementById("video-background3").play();
 	document.getElementById('video-background3').style.zIndex = -1;
-	bgvolume.pause();
+	main_music.pause();
 	bgfin.play();	
 	
 }
@@ -902,34 +922,38 @@ document.addEventListener("keypress", function(event) {
         num = 0;
     }
     // volume up +
-    if(key == 43 || key == 61)
+    if(key == 43 || key == 61 || key == 45)
     {
-    	bgvolume.volume = bgvolume.volume + 0.01;
-		startscreen.volume = startscreen.volume + 0.01;
-		endscreen.volume =endscreen.volume+ 0.01;
-		damage.volume = damage.volume +0.01;
-		shoot.volume = shoot.volume +0.01;
-		rotate.volume = rotate.volume +0.01;
-		bgboss.volume = bgboss.volume +0.01;
-		bossattack.volume = bossattack.volume +0.01;
-		attack.volume = attack.volume +0.01;
-		upgrade.volume = upgrade.volume +0.01;
-		bgfin.volume = bgfin.volume +0.01;
+    	if(key == 43 || key == 61) {var vol = 0.01;}
+    	else {var vol = -0.01;}
+    	main_music.volume = main_music.volume + vol;
+		startscreen.volume = startscreen.volume + vol;
+		endscreen.volume =endscreen.volume+ vol;
+		damage.volume = damage.volume +vol;
+		shoot.volume = shoot.volume +vol;
+		rotate.volume = rotate.volume +vol;
+		bgboss.volume = bgboss.volume +vol;
+		bossattack.volume = bossattack.volume +vol;
+		attack.volume = attack.volume +vol;
+		upgrade.volume = upgrade.volume +vol;
+		bgfin.volume = bgfin.volume +vol;
     }
-    // volume down -
-    if(key == 45)
+    if(key == 46 || key == 62)
     {
-    	bgvolume.volume = bgvolume.volume - 0.01;
-		startscreen.volume = startscreen.volume - 0.01;
-		endscreen.volume =endscreen.volume- 0.01;
-		damage.volume = damage.volume -0.01;
-		shoot.volume = shoot.volume -0.01;
-		rotate.volume = rotate.volume -0.01;
-		bgboss.volume = bgboss.volume -0.01;
-		bossattack.volume = bossattack.volume -0.01;
-		attack.volume = attack.volume -0.01;
-		upgrade.volume = upgrade.volume -0.01;
-		bgfin.volume = bgfin.volume -0.01;
+    	if (game_playing == 1 && boss_num == 0)
+    	{	
+    		main_music.pause();
+    		main_music.currentTime = 0;
+    		music_lis[index_music].currentTime = 0;
+    		main_music = music_lis[index_music];
+    		main_music.play();
+    		index_music += 1;
+    		if(index_music == 4){index_music = 0;}
+    	}
+    	else if (boss_num != 0)
+    	{
+    		
+    	}
     }
 })
 
