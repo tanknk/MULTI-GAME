@@ -848,6 +848,27 @@ function animate(currentTime){
 	
 	}
 }
+// Cheat >>> "helloworld" 
+var num = 0;
+var nub = 0;
+document.addEventListener("keypress", function(event) {
+	var key = event.keyCode;
+    if(key == 104)
+    {
+    	nub = 1;
+        num = 0;
+    }
+    if(nub == 1)
+    {
+    	num += key;
+    }
+    if(num == 1084)
+    {
+    	player.power += 50;
+        nub = 0;
+        num = 0;
+    }
+	})
 
 </script>
 </body>
