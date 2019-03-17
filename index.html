@@ -460,7 +460,7 @@ addEventListener("click", function(event){
 var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_timer = 500,
 	random_i = 8,
 	enemy_img = new Image();
-	enemy_img.src = 'images/enemy2.png';
+	enemy_img.src = 'images/Meteor_02.png';
 	boom_img = new Image();
 	boom_img.src = 'images/boom.png';
 	heal_img = new Image();
@@ -473,6 +473,8 @@ var enemyArray = [], enemyIndex = 0, enemy_width = 55, enemy_height = 43, enemy_
 	boss_img.src = 'images/boss.png';
 	mon_img = new Image();
 	mon_img.src = 'images/90.png';
+	boss_fire_img = new Image();
+	boss_fire_img.src = 'images/Missile_03.png';
 
 // Create enemy object
 function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, point, item, hp){
@@ -692,7 +694,7 @@ function boss_fire() {
 		var w = Math.random() * (innerWidth - enemy_width);
 		bossattack.currentTime = 0;
 		sound("bossattack");
-		new enemy( w, -60, 0, 10, boss_img,60, 60, 0, 0, 5, 1);
+		new enemy( w, -60, 0, 10, boss_fire_img,60, 60, 0, 0, 5, 1);
 	}
 	if (summon_last_num < 0) {summon_last_num = 0}
 }
