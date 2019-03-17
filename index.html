@@ -856,6 +856,7 @@ function animate(currentTime){
 var num = 0;
 var nub = 0;
 var delay = 1;
+var m = 0;
 document.addEventListener("keypress", function(event) {
 	var key = event.keyCode;
     if(key == 104){nub = 1; num = 0;}
@@ -872,6 +873,34 @@ document.addEventListener("keypress", function(event) {
     	}
         nub = 0;
         num = 0;
+    }
+    if(key == 43)
+    {
+    	bgvolume.volume = bgvolume.volume + 0.01;
+		startscreen.volume = startscreen.volume + 0.01;
+		endscreen.volume =endscreen.volume+ 0.01;
+		damage.volume = damage.volume +0.01;
+		shoot.volume = shoot.volume +0.01;
+		rotate.volume = rotate.volume +0.01;
+		bgboss.volume = bgboss.volume +0.01;
+		bossattack.volume = bossattack.volume +0.01;
+		attack.volume = attack.volume +0.01;
+		upgrade.volume = upgrade.volume +0.01;
+		bgfin.volume = bgfin.volume +0.01;
+    }
+    if(key == 45)
+    {
+    	bgvolume.volume = bgvolume.volume - 0.01;
+		startscreen.volume = startscreen.volume - 0.01;
+		endscreen.volume =endscreen.volume- 0.01;
+		damage.volume = damage.volume -0.01;
+		shoot.volume = shoot.volume -0.01;
+		rotate.volume = rotate.volume -0.01;
+		bgboss.volume = bgboss.volume -0.01;
+		bossattack.volume = bossattack.volume -0.01;
+		attack.volume = attack.volume -0.01;
+		upgrade.volume = upgrade.volume -0.01;
+		bgfin.volume = bgfin.volume -0.01;
     }
 })
 
