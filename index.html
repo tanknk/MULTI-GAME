@@ -718,7 +718,7 @@ function handleCollisions(){
 				}, 100);
 				// Level
 				if (enemy_timer > 150) {if (score %120 == 0) {enemy_timer  -= 25;}}
-				if (ramdom_HP < 35) {if (score+60 %120 == 0) {ramdom_HP += 2;}}
+				if (ramdom_HP < 35 || score > 5000) {if (score+60 %120 == 0) {ramdom_HP += 2;}}
 				if (enemy.item == 5) {summon_last_num  -=1};
 				if (enemy.item == 4){
 					sound("bossdied");
