@@ -93,6 +93,9 @@
 <audio id="bossattack" preload="auto">
 	<source src="sound/bossattack.mp3" type="audio/ogg">
 </audio>
+<audio id="cheat" preload="auto">
+	<source src="sound/cheat.mp3" type="audio/ogg">
+</audio>
 <video autoplay muted id="video-background1" loop>
   	<source src="vdo/background1.mp4" type="video/mp4">
 </video>
@@ -853,22 +856,20 @@ var num = 0;
 var nub = 0;
 document.addEventListener("keypress", function(event) {
 	var key = event.keyCode;
-    if(key == 104)
-    {
-    	nub = 1;
-        num = 0;
-    }
-    if(nub == 1)
-    {
-    	num += key;
-    }
+    if(key == 104){nub = 1; num = 0;}
+    if(nub == 1){num += key;}
     if(num == 1084)
     {
-    	player.power += 50;
+    	if(player.power < 130)
+    	{
+    		player.power += 20;
+    		cheat.currentTime = 0;
+    		sound("cheat");
+    	}
         nub = 0;
         num = 0;
     }
-	})
+})
 
 </script>
 </body>
