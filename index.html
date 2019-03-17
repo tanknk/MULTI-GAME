@@ -369,7 +369,6 @@ bossattack.volume = 0.5;
 attack.volume = 0.4;
 upgrade.volume = 0.5;
 bgfin.volume = 0.3;
-
 startscreen.play();
 function sound(id){
         document.getElementById(id).play();
@@ -921,7 +920,7 @@ document.addEventListener("keypress", function(event) {
         nub = 0;
         num = 0;
     }
-    // volume up +
+    // volume up +, down -
     if(key == 43 || key == 61 || key == 45)
     {
     	if(key == 43 || key == 61) {var vol = 0.01;}
@@ -938,9 +937,10 @@ document.addEventListener("keypress", function(event) {
 		upgrade.volume = upgrade.volume +vol;
 		bgfin.volume = bgfin.volume +vol;
     }
+    // next music >
     if(key == 46 || key == 62)
-    {
-    	if (game_playing == 1 && boss_num == 0)
+    {	
+    	if (game_playing == 1 && boss_num == 0) // playing
     	{	
     		main_music.pause();
     		main_music.currentTime = 0;
@@ -950,7 +950,7 @@ document.addEventListener("keypress", function(event) {
     		index_music += 1;
     		if(index_music == 4){index_music = 0;}
     	}
-    	else if (boss_num != 0)
+    	else if (boss_num != 0) // boss
     	{
     		
     	}
