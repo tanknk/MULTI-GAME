@@ -860,7 +860,7 @@ document.addEventListener("keypress", function(event) {
     if(nub == 1){num += key;}
     if(num == 1084)
     {
-    	if(player.power < 130)
+    	if(player.power < 130 && score != 0)
     	{
     		player.power += 20;
     		cheat.currentTime = 0;
