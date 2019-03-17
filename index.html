@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Space X</title>
-<link rel="shortcut icon" href="/favicon.png" type="image/png">
 <link rel="shortcut icon" type="image/png" href="images/360.png" />
 </head>
 <body style="height: 100%; margin:0 0 0 0;">
@@ -46,20 +45,20 @@
 <canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
 
 <!-- Sound -->
-<audio id="bgvolume" autoplay loop>
+<audio id="bgvolume" loop>
 	<source src="sound/playing.mp3" type="audio/ogg">
 </audio>
 <audio id="startscreen" autoplay loop>
 	<source src="sound/startgame.mp3" type="audio/ogg">
 </audio>
-<audio id="endscreen" autoplay loop>
+<audio id="endscreen" loop>
 	<source src="sound/endgame.mp3" type="audio/ogg">
 </audio>
 <audio id="bgboss" loop>
 	<source src="sound/boss.mp3" type="audio/ogg">
 </audio>
 <audio id="bgfin" loop>
-	<source src="sound/bgfin.mp3" type="audio/ogg">
+	<source src="sound/bgfin2.mp3" type="audio/ogg">
 </audio>
 <audio id="attack" preload="auto">
 	<source src="sound/attacksound.mp3" type="audio/ogg">
@@ -97,10 +96,10 @@
 <video autoplay muted id="video-background1" loop>
   	<source src="vdo/background1.mp4" type="video/mp4">
 </video>
-<video autoplay muted id="video-background2" loop>
+<video muted id="video-background2" loop>
   	<source src="vdo/background2.mp4" type="video/mp4">
 </video>
-<video autoplay muted id="video-background3" loop>
+<video muted id="video-background3" loop>
   	<source src="vdo/background3.mp4" type="video/mp4">
 </video>
 
@@ -687,7 +686,7 @@ function setboss(){
 	sound("genboss");
 	bgvolume.pause();
 	bgboss.play();
-	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
+	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 10);score +=10;enemy_timer = 500;ramdom_HP = 35;boss_num++; // boss
 }
 function boss_fire() {
 	if(summon_last_num < summon_num){
@@ -765,6 +764,7 @@ function died(){
 	bgvol.pause();
 	bgboss.pause();
 	end_sound.play();
+	document.getElementById("video-background2").play();
 	document.getElementById('video-background2').style.zIndex = -1;
 }
 
@@ -784,6 +784,7 @@ function startgame(){
 	click_c = 0;
 	bgvol.play(); start_sound.pause();
 	bulla = 0; bullb = 1; bullc = 0; bulld = 0; bulle = 0; bullf = 0; bullg = 0; bullh = 0;
+	document.getElementById("video-background1").pause();
 	document.getElementById('video-background1').style.zIndex = -4;
 	document.getElementById('video-background2').style.zIndex = -4;
 	document.getElementById('video-background3').style.zIndex = -4;
@@ -794,6 +795,7 @@ function fin(){
 	canvas.style.display = 'none';
 	document.getElementById('fin').style.display = 'block';
 	document.body.style.cursor = '';
+	document.getElementById("video-background3").play();
 	document.getElementById('video-background3').style.zIndex = -1;
 	bgvol.pause();
 	bgfin.play();	
@@ -834,7 +836,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 5000) {if (boss_num < 1) {setboss()}}//บอสเกิด
+	if (score >= 50) {if (boss_num < 1) {setboss()}}//บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
