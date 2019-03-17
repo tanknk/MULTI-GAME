@@ -863,6 +863,7 @@ document.addEventListener("keypress", function(event) {
     {
     	if(player.power < 90 && score != 0 && delay == 1)
     	{
+    		delay = 0;
     		player.power += 20;
     		cheat.currentTime = 0;
     		sound("cheat");
