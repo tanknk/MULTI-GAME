@@ -42,9 +42,15 @@
 <div class='stars'></div>
 <div class='twinkling'></div>
 <div class='clouds'></div>
-<!--main-->
+
+<!-- MAIN -->
 <canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
-<progress id="power_bar" class="progress is-large is-info" max="200" value="1"></progress>
+
+<!-- PLAY HP BAR-->
+<progress id="power_bar" class="progress" max="200" value="1"></progress>
+
+<!-- BOSS HP BAR-->
+<progress id="boss_bar" class="progressboss" max="300" value="1"></progress>
 
 <!-- Sound -->
 <audio id="bg_music" loop>
@@ -120,56 +126,56 @@
 <!-- BACKGROUND STYLE -->
 <style type="text/css">
 	#video-background1 {
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-	z-index: -1;
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: -1;
 	}
 	#video-background2 {
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-	z-index: -2;
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: -2;
 	}
 	#video-background3 {
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-	z-index: -3;
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: -3;
 	}
 	#power_bar{
-	position: fixed;
-	width: 12%;
-	height: 3%;
-	right: 5%;
-	top: 2.3%;
-	transform: rotate(180deg);
-	z-index: -4;
+		position: fixed;
+		width: 12%;height: 3%;
+		right: 5%;top: 2.3%;
+		transform: rotate(180deg);
+		z-index: -4;
 	}
-	.progress 
-	{
-  		background:lightgreen;
+	.progress {background:lightgreen;}
+	.progress::-webkit-progress-bar{background: transparent;}
+	.progress::-webkit-progress-value{background: #808080;}
+
+	#boss_bar{
+		position: fixed;
+		width: 40%;height: 3%;
+		right: 20%;top: 2.3%;
+		transform: rotate(180deg);
+		z-index: -4;
 	}
-	.progress::-webkit-progress-bar
-	{
-	    background: transparent;
-	}
-	.progress::-webkit-progress-value
-	{
-	    background: #808080;
-	}
+	.progressboss {background:lightgreen;}
+	.progressboss::-webkit-progress-bar{background: transparent;}
+	.progressboss::-webkit-progress-value{background: #808080;}
 	
 
 /* Button */
@@ -594,6 +600,7 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 	else{this.update = function(){
 		this.x -= this.dx;
 		boss_hp = this.hp;
+		boss_bar.value = 300-boss_hp;
 		if (this.x > innerWidth- this.width) {this.dx *=-1}
 		if (this.x < 0+ this.width) {this.dx *=-1}
 		this.draw();boss_fire();
@@ -750,6 +757,7 @@ var summon_num = 2,
 	dxU = 0,
 	dyU = 0;
 function setboss(){
+	boss_bar.value = boss_hp;
 	sound("genboss");
 	main_music.pause();
 	enemyArray.forEach(function(enemy){
@@ -763,7 +771,7 @@ function setboss(){
 	dyU += 3;//ความเร็วมอน
 	dxU += 3;
 	enemy_timer = 200000;//มอนเกิด 
-	setTimeout(function(){bgboss.play();									//    v เลือดบอสอยู่นี่ครับ
+	setTimeout(function(){bgboss.play();			//    v เลือดบอสอยู่นี่ครับ
 	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 200;}, 2000);
 	ramdom_HP_enemy = 35//สุ่มตัวใหญ่
 	boss_num++; // boss
@@ -925,7 +933,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 5000) {if (boss_num < 1) {setboss()}} // บอสเกิด
+	if (score >= 50) {if (boss_num < 1) {setboss()}} // บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
@@ -946,7 +954,8 @@ function animate(currentTime){
 	{
 		c.font = '30px Pacifico';
 		c.fillStyle = '#fff';
-		c.fillText('BOSS HP : '+boss_hp+"%", 900, 40);
+		c.fillText('BOSS', 900, 40);
+		document.getElementById('boss_bar').style.zIndex = -1;
 	}
 	if(player.power <= 20){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF0000';}
 	else if(player.power <= 50){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF8000';}
@@ -1014,6 +1023,7 @@ document.addEventListener("keypress", function(event) {
     		if(index_music == 4){index_music = 0;}
     	}
     }
+    // player.power += 20
     if(key == 112)
     {
     	player.power += 20;
