@@ -6,6 +6,7 @@
 <link rel="shortcut icon" type="image/png" href="images/360.png" />
 </head>
 <body style="height: 100%; margin:0 0 0 0;">
+
 <!-- Start game screen -->
 <center>
 	<div id="startGame">
@@ -123,8 +124,9 @@
   	<source src="vdo/background3.mp4" type="video/mp4">
 </video>
 
-<!-- BACKGROUND STYLE -->
+<!-- STYLE -->
 <style type="text/css">
+	/* BACKGROUND STYLE */
 	#video-background1 {
 		position: fixed;
 		right: 0;
@@ -155,6 +157,7 @@
 		height: auto;
 		z-index: -3;
 	}
+	/* Player HP Bar */
 	#power_bar{
 		position: fixed;
 		width: 12%;height: 3%;
@@ -165,7 +168,7 @@
 	.progress {background:lightgreen;}
 	.progress::-webkit-progress-bar{background: transparent;}
 	.progress::-webkit-progress-value{background: #808080;}
-
+	/* Boss HP Bar */
 	#boss_bar{
 		position: fixed;
 		width: 50%;height: 3%;
@@ -379,6 +382,7 @@
 	}
 </style>
 
+<!-- ALL IN ONE -->
 <script type="text/javascript">
 
 // Sound set
@@ -723,6 +727,7 @@ function fire(){                                         //  <^  ^  ^>     h  a 
 	shoot.currentTime = 0;
 	sound("shoot");
 }
+// ทิศทางของกระสุน
 function roubullest(){
 	b = bullb; cc = bullc; d = bulld; e = bulle; f = bullf;
 	g = bullg;	h = bullh;	a = bulla;	bulla = b;
@@ -757,6 +762,7 @@ var summon_num = 2,
 	boss_num = 0,
 	dxU = 0,
 	dyU = 0;
+// บอสเกิดป่ะ
 function setboss(){
 	boss_bar.value = boss_hp;
 	sound("genboss");
@@ -799,7 +805,7 @@ function handleCollisions(){
 				if (enemy.hp <= 0) {
 				enemy.img = boom_img;
 				enemy.dx = 0;
-				enemy.dy =0;
+				enemy.dy = 0;
 				score += 10;
 				setTimeout(function() {
   					enemy.delete();
@@ -908,10 +914,11 @@ function animate(currentTime){
 	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
 	c.fillText('SCORE : '+score, 20, 40);
-	// Player power
+	// Power
 	c.font = '22px Pacifico';
 	c.fillStyle = '#000';
 	c.fillText('POWER              '+player.power+"%", innerWidth-250, 38);
+	// Player power
 	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
 	c.fillText(player.power+" %", innerWidth-90, 40);
@@ -937,7 +944,7 @@ function animate(currentTime){
 	});
 	// Detect collisions
 	handleCollisions();
-	if (score >= 50) {if (boss_num < 1) {setboss()}} // บอสเกิด
+	if (score >= 5000) {if (boss_num < 1) {setboss()}} // บอสเกิด
 		
 	if(player.power == -100) // บอสตายแล้ว player.power = -100
 	{
@@ -961,6 +968,7 @@ function animate(currentTime){
 		c.fillText('BOSS', 945, 40);
 		document.getElementById('boss_bar').style.zIndex = -1;
 	}
+	// เปลี่ยนสี Boss HP
 	if(boss_hp <= 20){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF0000';}
 	else if(boss_hp <= 50){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF8000';}
 	else if(boss_hp <= 70){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FFFF00';}
@@ -972,7 +980,7 @@ function animate(currentTime){
 	else if(boss_hp <= 230){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#0000FF';}
 	else if(boss_hp <= 260){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF00FF';}
 	else if(boss_hp <= 300){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF007F';}
-
+	// เปลี่ยนสี Play HP
 	if(player.power <= 20){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF0000';}
 	else if(player.power <= 50){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF8000';}
 	else if(player.power <= 80){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FFFF00';}
@@ -985,7 +993,7 @@ function animate(currentTime){
 	else if(player.power <= 200){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF00FF';}
 
 }
-
+// KEY INPUT
 var num = 0;
 var nub = 0;
 var delay = 1;
