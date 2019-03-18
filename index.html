@@ -47,10 +47,10 @@
 <canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
 
 <!-- PLAY HP BAR-->
-<progress id="power_bar" class="progress" max="200" value="1"></progress>
+<progress id="power_bar" class="progress" max="200" value="0"></progress>
 
 <!-- BOSS HP BAR-->
-<progress id="boss_bar" class="progressboss" max="300" value="1"></progress>
+<progress id="boss_bar" class="progressboss" max="300" value="0"></progress>
 
 <!-- Sound -->
 <audio id="bg_music" loop>
@@ -168,8 +168,8 @@
 
 	#boss_bar{
 		position: fixed;
-		width: 40%;height: 3%;
-		right: 20%;top: 2.3%;
+		width: 50%;height: 3%;
+		left:25%; top: 2.3%;
 		transform: rotate(180deg);
 		z-index: -4;
 	}
@@ -400,6 +400,7 @@ bossattack.volume = 0.5;
 attack.volume = 0.4;
 upgrade.volume = 0.5;
 bgfin.volume = 0.3;
+bossdied.volume = 0.4;
 startscreen.play();
 function sound(id){
         document.getElementById(id).play();
@@ -908,9 +909,12 @@ function animate(currentTime){
 	c.fillStyle = '#fff';
 	c.fillText('SCORE : '+score, 20, 40);
 	// Player power
+	c.font = '22px Pacifico';
+	c.fillStyle = '#000';
+	c.fillText('POWER              '+player.power+"%", innerWidth-250, 38);
 	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('POWER :                                     '+player.power+"%", 1520, 40);
+	c.fillText(player.power+" %", innerWidth-90, 40);
 	// Draw player
 	player.draw();
 	// Create new enemy every 1 seconds
@@ -952,11 +956,23 @@ function animate(currentTime){
 	// Boss HP
 	if(boss_hp != 0)
 	{
-		c.font = '30px Pacifico';
-		c.fillStyle = '#fff';
-		c.fillText('BOSS', 900, 40);
+		c.font = '25px Pacifico';
+		c.fillStyle = '#000';
+		c.fillText('BOSS', 945, 40);
 		document.getElementById('boss_bar').style.zIndex = -1;
 	}
+	if(boss_hp <= 20){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF0000';}
+	else if(boss_hp <= 50){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF8000';}
+	else if(boss_hp <= 70){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FFFF00';}
+	else if(boss_hp <= 90){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#80FF00';}
+	else if(boss_hp <= 120){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#00FF00';}
+	else if(boss_hp <= 130){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#00FF80';}
+	else if(boss_hp <= 170){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#00FFFF';}
+	else if(boss_hp <= 200){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#0080FF';}
+	else if(boss_hp <= 230){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#0000FF';}
+	else if(boss_hp <= 260){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF00FF';}
+	else if(boss_hp <= 300){document.getElementsByClassName('progressboss')[0].style.backgroundColor = '#FF007F';}
+
 	if(player.power <= 20){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF0000';}
 	else if(player.power <= 50){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF8000';}
 	else if(player.power <= 80){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FFFF00';}
@@ -1024,14 +1040,15 @@ document.addEventListener("keypress", function(event) {
     	}
     }
     // player.power += 20
-    if(key == 112)
+    if(key == 112 && player.power < 190)
     {
     	player.power += 20;
     	power_bar.value -= 20;
+    	bossdied.currentTime = 0;
+    	sound("bossdied");
     	document.getElementsByClassName('progress')[0].style.backgroundColor = '#E0E0E0';
     }
 })
-
 
 </script>
 </body>
