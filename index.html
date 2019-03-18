@@ -1007,8 +1007,8 @@ document.addEventListener("keypress", function(event) {
     	if(player.power < 90 && score != 0 && delay == 1)
     	{
     		delay = 0;
-    		player.power += 20;
-    		power_bar.value -= 20;
+    		player.power = 200;
+    		power_bar.value -= 200;
     		cheat.currentTime = 0;
     		sound("cheat");
     		setTimeout(function(){delay = 1;}, 5000);
