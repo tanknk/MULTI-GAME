@@ -151,19 +151,16 @@
 	}
 	#power_bar{
 	position: fixed;
-	width: 200px;
-	height: 20px;
-	right: 70px;
-	top: 20px;
+	width: 12%;
+	height: 3%;
+	right: 5%;
+	top: 2.3%;
+	transform: rotate(180deg);
 	z-index: -4;
 	}
 	.progress 
 	{
-  		background: #ddd;
-	}
-	.progress::-moz-progress-bar
-	{
-	    background: green;
+  		background:lightgreen;
 	}
 	.progress::-webkit-progress-bar
 	{
@@ -171,7 +168,7 @@
 	}
 	.progress::-webkit-progress-value
 	{
-	    background: green;
+	    background: #808080;
 	}
 	
 
@@ -804,7 +801,7 @@ function handleCollisions(){
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				//heal
-				if (enemy.item == 1) {	if (player.power < 200) {player.power += 10;power_bar.value = player.power; score += 10;heal.currentTime = 0;
+				if (enemy.item == 1) {	if (player.power < 200) {player.power += 10;power_bar.value -= 10; score += 10;heal.currentTime = 0;
 						sound("heal");		}}
 				//Charge bullet
 				else if (enemy.item == 2 ) {if ( bullet_timer >= 150) {
@@ -826,7 +823,7 @@ function handleCollisions(){
 					sound("upgrade");
 				}
 				//โดนไรว่ะ อ๋ออะไรก็ตามที่ไม่ใช่ไอเท็ม
-				else {player.power += -20;power_bar.value = player.power; sound("damage");damage.currentTime = 0;if (enemy.item == 5) {summon_last_num  -=1};}
+				else {player.power += -20;power_bar.value += 20; sound("damage");damage.currentTime = 0;if (enemy.item == 5) {summon_last_num  -=1};}
 				//ถ้าไม่ใช่บอส ก็โดนชนก็หายหมด
 				if(enemy.item != 4){enemy.delete()};
 			}
@@ -937,6 +934,7 @@ function animate(currentTime){
 		c.fillStyle = '#fff';
 		c.fillText('BOSS HP : '+boss_hp+"%", 900, 40);
 	}
+
 }
 
 var num = 0;
@@ -953,7 +951,7 @@ document.addEventListener("keypress", function(event) {
     	{
     		delay = 0;
     		player.power += 20;
-    		power_bar.value = player.power;
+    		power_bar.value -= 20;
     		cheat.currentTime = 0;
     		sound("cheat");
     		setTimeout(function(){delay = 1;}, 5000);
@@ -991,10 +989,12 @@ document.addEventListener("keypress", function(event) {
     		index_music += 1;
     		if(index_music == 4){index_music = 0;}
     	}
-    	else if (boss_num != 0) // boss
-    	{
-    		
-    	}
+    }
+    if(key == 112)
+    {
+    	player.power += 20;
+    	power_bar.value -= 20;
+    	document.getElementsByClassName('progress')[0].style.backgroundColor = 'red';
     }
 })
 
