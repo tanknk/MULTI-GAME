@@ -42,7 +42,9 @@
 <div class='stars'></div>
 <div class='twinkling'></div>
 <div class='clouds'></div>
+<!--main-->
 <canvas id="canvas" style="position: absolute; background-size:cover; top:0%; left:0%; height: 100%; width:100%; display:none;"></canvas>
+<progress id="power_bar" class="progress is-large is-info" max="200" value="1"></progress>
 
 <!-- Sound -->
 <audio id="bg_music" loop>
@@ -147,6 +149,31 @@
 	height: auto;
 	z-index: -3;
 	}
+	#power_bar{
+	position: fixed;
+	width: 200px;
+	height: 20px;
+	right: 70px;
+	top: 20px;
+	z-index: -4;
+	}
+	.progress 
+	{
+  		background: #ddd;
+	}
+	.progress::-moz-progress-bar
+	{
+	    background: green;
+	}
+	.progress::-webkit-progress-bar
+	{
+	    background: transparent;
+	}
+	.progress::-webkit-progress-value
+	{
+	    background: green;
+	}
+	
 
 /* Button */
 	* {
@@ -350,6 +377,7 @@
 </style>
 
 <script type="text/javascript">
+
 // Sound set
 var music_lis = [bg_music, bg_music2, bg_music3, bg_music4];
 var game_playing = 0;
@@ -383,6 +411,7 @@ var innerWidth = 2000,
 	canvas.height = innerHeight;
 
 // Variables
+let power_bar = document.getElementById("power_bar");
 var score = 0,
 	lastTime = 0;
 
@@ -421,6 +450,7 @@ var player = {},
 	   c.drawImage(player_img, this.x, this.y, this.width, this.height);
 	}
 };
+power_bar.value = player.power;
 
 // Rotate player
 var click_c = 0;
@@ -765,7 +795,7 @@ function handleCollisions(){
 	enemyArray.forEach(function(enemy){
 			if(collides(player,enemy)){
 				//heal
-				if (enemy.item == 1) {	if (player.power < 200) {player.power += 10; score += 10;heal.currentTime = 0;
+				if (enemy.item == 1) {	if (player.power < 200) {player.power += 10;power_bar.value = player.power; score += 10;heal.currentTime = 0;
 						sound("heal");		}}
 				//Charge bullet
 				else if (enemy.item == 2 ) {if ( bullet_timer >= 150) {
@@ -787,7 +817,7 @@ function handleCollisions(){
 					sound("upgrade");
 				}
 				//โดนไรว่ะ อ๋ออะไรก็ตามที่ไม่ใช่ไอเท็ม
-				else {player.power += -20; sound("damage");damage.currentTime = 0;if (enemy.item == 5) {summon_last_num  -=1};}
+				else {player.power += -20;power_bar.value = player.power; sound("damage");damage.currentTime = 0;if (enemy.item == 5) {summon_last_num  -=1};}
 				//ถ้าไม่ใช่บอส ก็โดนชนก็หายหมด
 				if(enemy.item != 4){enemy.delete()};
 			}
@@ -826,6 +856,7 @@ function startgame(){
 	document.getElementById('video-background1').style.zIndex = -4;
 	document.getElementById('video-background2').style.zIndex = -4;
 	document.getElementById('video-background3').style.zIndex = -4;
+	document.getElementById('power_bar').style.zIndex = -1;
 }
 
 // FIN screen function
@@ -851,7 +882,7 @@ function animate(currentTime){
 	// Player power
 	c.font = '30px Pacifico';
 	c.fillStyle = '#fff';
-	c.fillText('POWER : '+player.power+"%", innerWidth-210, 40);
+	c.fillText('POWER :                                     '+player.power+"%", 1520, 40);
 	// Draw player
 	player.draw();
 	// Create new enemy every 1 seconds
@@ -913,6 +944,7 @@ document.addEventListener("keypress", function(event) {
     	{
     		delay = 0;
     		player.power += 20;
+    		power_bar.value = player.power;
     		cheat.currentTime = 0;
     		sound("cheat");
     		setTimeout(function(){delay = 1;}, 5000);
@@ -956,6 +988,7 @@ document.addEventListener("keypress", function(event) {
     	}
     }
 })
+
 
 </script>
 </body>
