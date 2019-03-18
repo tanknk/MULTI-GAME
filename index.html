@@ -578,6 +578,10 @@ function enemy(x, y, dx, dy, enemy_img, enemy_width, enemy_height, rotation, poi
 		{this.update = function(){
 		this.y += this.dy;
 		this.x += this.dx;
+		if(this.x < -this.width){this.delete()
+			if (this.item == 5) {summon_last_num  -=1};}
+		if(this.y < -this.height){this.delete()
+			if (this.item == 5) {summon_last_num  -=1};}
 		if(this.y > innerHeight + this.height){
 			this.delete()
 			if (this.item == 5) {summon_last_num  -=1};
@@ -679,6 +683,8 @@ function bullet(x, y, width, height, speedx, speedy){
 		if(this.x < -this.width){
 			delete this.delete();
 		}
+		if(this.y > innerHeight + this.height){delete this.delete();}
+		if(this.x > innerWidth + this.width){delete this.delete();}
 		this.draw();
 	}
 	this.delete = function(){
