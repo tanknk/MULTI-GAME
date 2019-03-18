@@ -746,11 +746,20 @@ var summon_num = 2,
 function setboss(){
 	sound("genboss");
 	main_music.pause();
+	enemyArray.forEach(function(enemy){
+	enemy.img = boom_img;
+	enemy.dx = 0;
+	enemy.dy =0;});
+	setTimeout(function() {
+  					enemyArray = [], enemyIndex = 0;
+  					attack.currentTime = 0;
+					sound("attack");	}, 1500);
+
 	dyU += 3;//ความเร็วมอน
 	dxU += 3;
-	enemy_timer = 200;//มอนเกิด 
-	bgboss.play();									//    v เลือดบอสอยู่นี่ครับ
-	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;
+	enemy_timer = 200000;//มอนเกิด 
+	setTimeout(function(){bgboss.play();									//    v เลือดบอสอยู่นี่ครับ
+	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 200;}, 2000);
 	ramdom_HP_enemy = 35//สุ่มตัวใหญ่
 	boss_num++; // boss
 }
