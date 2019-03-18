@@ -10,7 +10,18 @@
 <!-- Start game screen -->
 <center>
 	<div id="startGame">
-		<center><a>Space X</a></center>
+		<center><a id="text">Space X</a></center>
+		<div id="howto" style="display:block; background-color:hsla(10,0%,0%,0); color:white; width:70%; height:35%; position:absolute; top:30%; left:23%; text-align:left;">
+				<p>Space X เป็นแกมแนวยิงมุมมองด้านบนที่เราจะได้เล่นเป็นคนขับยานอวกาศเดินทางไปสู้กับยุทธ์ตัวร้ายเเห่งกาแล็กซี่สารขัณฑ์<br>
+					Item<br>
+					-  <img src="images/heal.png" style="width:20px; height:20px;"> Heal (เป็นอุปกรณ์ที่ใช้ซ่อมยาน ทำให้ยานมีความทนต้านมากขึ้น)<br>
+					-  <img src="images/firerate.png" style="width:20px; height:20px;"> Charge bullet (เป็นอุปกรณ์ที่ช่วยในการยิง ทำให้ยิงได้เร็วขึ้น เเต่ใช้เเล้วหมดไป)<br>
+					-  <img src="images/roundbullet.png" style="width:20px; height:20px;"> Laser gun (เป็นปืนที่ใส่เพิ่มในยานได้ สามารถยิงได้หลายกระบอกได้พร้อมกัน เเต่จะเสียความเร็วในการยิงไป)<br>
+					Control<br>
+					- ตัวละครจะเคลื่อนที่ไปตามเมาส์<br>
+					- คลิกซ้ายเพื่อหมุนไปทางซ้าย (เนื่องจากคนขับยานถนัดซ้าย ดังนั้นยานจะหมุนไปเเค่ทางซ้ายเท่านั้น)<br>
+					- การยิงปืนนั้น ไม่ต้องกดปุ่มใด เพราะยานมีระบบยิงแบบ Full-auto</p>
+				</div>
 		<div class="buttons">
 			<button class="btn-hover color-8" onclick="startgame()">ARE U READY?</button>
 		</div>
@@ -315,6 +326,9 @@
 	height: 100%;
 	width: 100%;
 	display : block;
+	}
+	a#text{
+		top:10%;
 	}
 	#input{
 		position:absolute;
