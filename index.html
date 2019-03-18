@@ -942,6 +942,16 @@ function animate(currentTime){
 		c.fillStyle = '#fff';
 		c.fillText('BOSS HP : '+boss_hp+"%", 900, 40);
 	}
+	if(player.power <= 20){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF0000';}
+	else if(player.power <= 50){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF8000';}
+	else if(player.power <= 80){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FFFF00';}
+	else if(player.power <= 100){document.getElementsByClassName('progress')[0].style.backgroundColor = '#80FF00';}
+	else if(player.power <= 120){document.getElementsByClassName('progress')[0].style.backgroundColor = '#00FF00';}
+	else if(player.power <= 150){document.getElementsByClassName('progress')[0].style.backgroundColor = '#00FF80';}
+	else if(player.power <= 170){document.getElementsByClassName('progress')[0].style.backgroundColor = '#00FFFF';}
+	else if(player.power <= 180){document.getElementsByClassName('progress')[0].style.backgroundColor = '#0080FF';}
+	else if(player.power <= 190){document.getElementsByClassName('progress')[0].style.backgroundColor = '#0000FF';}
+	else if(player.power <= 200){document.getElementsByClassName('progress')[0].style.backgroundColor = '#FF00FF';}
 
 }
 
@@ -1002,7 +1012,7 @@ document.addEventListener("keypress", function(event) {
     {
     	player.power += 20;
     	power_bar.value -= 20;
-    	document.getElementsByClassName('progress')[0].style.backgroundColor = 'red';
+    	document.getElementsByClassName('progress')[0].style.backgroundColor = '#E0E0E0';
     }
 })
 
