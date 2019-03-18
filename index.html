@@ -779,7 +779,7 @@ function setboss(){
 	dxU += 3;
 	enemy_timer = 200000;//มอนเกิด 
 	setTimeout(function(){bgboss.play();			//    v เลือดบอสอยู่นี่ครับ
-	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 200;}, 2000);
+	new enemy(1000, 60, 5, 0, boss_img,120, 120, 0, 0, 4, 300);score +=10;enemy_timer = 300;}, 2000);
 	ramdom_HP_enemy = 35//สุ่มตัวใหญ่
 	boss_num++; // boss
 }
@@ -790,7 +790,7 @@ function boss_fire() {
 		var w = Math.random() * (innerWidth - enemy_width);
 		bossattack.currentTime = 0;
 		sound("bossattack");
-		new enemy( w, -60, 0, 15, boss_fire_img,37, 75, 0, 0, 5, 3);
+		new enemy( w, -60, 0, 10, boss_fire_img,45, 70, 0, 0, 5, 1);
 	}
 	if (summon_last_num < 0) {summon_last_num = 0}
 }
