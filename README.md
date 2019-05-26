@@ -11,7 +11,7 @@
 <h3>Game url</h3>
 <pre><a href="http://www.it.kmitl.ac.th/~it61070022/Space_X/index.html">http://www.it.kmitl.ac.th/~it61070022/Space_X/index.html</a></pre>
 <h3>Presentation Video</h3>
-<pre>Space X video<br>a href="https://www.youtube.com/watch?v=GwJiB64rwg8">https://www.youtube.com/watch?v=GwJiB64rwg8</a><br>Snake​ 3019 & ParangPrachaIT & Type Warrior | Game Cast<br><a href="https://www.youtube.com/watch?v=3qa6zEXjuPI">https://www.youtube.com/watch?v=3qa6zEXjuPI</a></pre>
+<pre>Space X video<br><a href="https://www.youtube.com/watch?v=GwJiB64rwg8">https://www.youtube.com/watch?v=GwJiB64rwg8</a><br>Snake​ 3019 & ParangPrachaIT & Type Warrior | Game Cast<br><a href="https://www.youtube.com/watch?v=3qa6zEXjuPI">https://www.youtube.com/watch?v=3qa6zEXjuPI</a></pre>
 -------------------------------------------------------------------------------------------------------------------------------------<br>
 ชื่อเกม : Space X<br>
 คำอธิบาย : เป็นเกมที่รับประกันความเสียเวลาในการเคลียร์เกมแน่นอนครับ! <หมุน ปิ้ว หมุน ปิ้ว หมุน ปิ้ว ปิ้ว><br>
